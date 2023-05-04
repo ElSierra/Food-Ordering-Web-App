@@ -1,0 +1,14 @@
+body {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  background-image: url(./bg.svg) !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: rgb(0, 0, 0) !important;
+  }
+}
+
