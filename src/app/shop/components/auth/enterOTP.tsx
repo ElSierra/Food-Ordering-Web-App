@@ -1,5 +1,13 @@
 import { useVerifyOTPMutation } from "@/redux/features/api/userSlice";
-import { Box, Center, Flex, Input, Spinner, useColorModeValue, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  Input,
+  Spinner,
+  useColorModeValue,
+  useToast,
+} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { updateState, reset } from "@/redux/features/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -13,9 +21,8 @@ export default function EnterOTP({ onClose }: { onClose: () => void }) {
   console.log("🚀 ~ file: enterOTP.tsx:13 ~ EnterOTP ~ response:", response);
   const [otp, setOtp] = useState("");
   const bg = useColorModeValue("#37373744", "#353131");
-  
 
-console.log(otp)
+  console.log(otp);
 
   useEffect(() => {
     if (otp.length === 4) {
@@ -48,7 +55,6 @@ console.log(otp)
           });
         });
     }
-  
   }, [otp]);
 
   return (
@@ -86,12 +92,13 @@ console.log(otp)
                 {...props}
                 style={{
                   width: "100%",
-                  backgroundColor : bg,
+                  backgroundColor: bg,
                   textAlign: "center",
                   fontSize: "60px",
                   height: "100px",
                   borderRadius: "10px",
                 }}
+                type="number"
               />
             )}
           />

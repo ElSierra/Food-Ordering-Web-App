@@ -20,6 +20,7 @@ import { SearchBar } from "./searchBar";
 import { AuthMenu } from "../auth/authMenu";
 import { useUserState } from "@/app/hooks/setGetUser";
 import { ArrowDown2, BagHappy, WalletMoney } from "iconsax-react";
+import { MobileSearchBar } from "./mobileSearchBar";
 
 export default function NavBar() {
   // const {
@@ -46,13 +47,14 @@ export default function NavBar() {
       padding={0}
       zIndex={"10"}
       bg={bg}
+      borderBottom={`1px solid ${borderBottom}`}
     >
       <Flex
         pl={{ base: "20px", sm: "20px", md: "20px", lg: "80px" }}
         pr={{ base: "20px", sm: "20px", md: "20px", lg: "80px" }}
         pt={{ base: "10px", sm: "20px", md: "15px" }}
         pb={{ base: "10px", sm: "20px", md: "15px" }}
-        borderBottom={`1px solid ${borderBottom}`}
+        borderBottom={{base :``, lg: "1px solid ${borderBottom}"}}
         height={"fit-content"}
 
         // borderEndStartRadius={'20px'}
@@ -105,6 +107,7 @@ export default function NavBar() {
           />
         </Center>
       </Flex>
+      <MobileSearchBar />
     </Box>
   );
 }

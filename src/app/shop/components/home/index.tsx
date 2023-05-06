@@ -22,7 +22,7 @@ import { useGetUserQuery } from "@/redux/features/api/authUserSlice";
 import UnVerifiedModalContainer from "../auth/verifyEmailModal";
 import { useUserState } from "@/app/hooks/setGetUser";
 import Cookies from 'js-cookie'
-import { SearchBar } from "./mobileSearchBar";
+
 
 
 
@@ -77,9 +77,9 @@ export const HomeContainer = () => {
   return (
     <>
       <UnVerifiedModalContainer isOpen={isOpen} onClose={onClose} />
-      <Flex mt={{base: "90px", lg: "120px"}} as={"main"} flexWrap={"wrap"} flexDirection={"column"}>
+      <Flex mt={{base: "180px", lg: "120px"}} as={"main"} flexWrap={"wrap"} flexDirection={"column"}>
         <Box id="explore" as={"section"} w="100%">
-        <SearchBar />
+        
           <Text fontWeight={"medium"} fontSize={"2xl"}>
             Explore Categories{" "}
           </Text>
