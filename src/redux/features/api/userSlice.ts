@@ -4,11 +4,11 @@ export const userSlice = createApi({
   reducerPath: "userSlice",
   baseQuery: fetchBaseQuery({
     baseUrl: WEBSITE_URL,
+    
   }),
 
   tagTypes: ["Post"],
   endpoints: (builder) => ({
-    
     loginUser: builder.mutation({
       query: (payload) => ({
         url: "/login",

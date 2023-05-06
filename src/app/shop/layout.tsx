@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <NavBar isLoggedIn />
+      <NavBar  />
       {children}
     </>
   );

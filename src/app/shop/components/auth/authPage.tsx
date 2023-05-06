@@ -19,6 +19,7 @@ import {
 import EnterOTP from "./enterOTP";
 import { updateState, reset } from "@/redux/features/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import Cookies from "js-cookie";
 
 interface props {
   authType: string;
@@ -67,16 +68,19 @@ export const AuthPage = ({ isOpen, onClose }: props) => {
             duration: 9000,
             isClosable: true,
           });
-          
+
           console.log("🚀 ~ file: auth.tsx:49 ~ loginUser ~ e:", e);
         })
         .catch((error) => {
-          console.log(error, '73');
-     const errorMessage = new Error(e).message
-     console.log(errorMessage)
+          console.log(error, "73");
+          const errorMessage = new Error(e).message;
+          console.log(errorMessage);
           toast({
             title: "Error",
-            description: error.data?.error === undefined ? error.data:`${error.data?.error}`,
+            description:
+              error.data?.error === undefined
+                ? error.data
+                : `${error.data?.error}`,
             status: "error",
             duration: 9000,
             isClosable: true,
@@ -86,9 +90,10 @@ export const AuthPage = ({ isOpen, onClose }: props) => {
       signUpUser(inputs)
         .unwrap()
         .then((e) => {
+          Cookies.set("qs_token", e.token, { expires: 7 });
           localStorage.setItem("quickChopUserEmail", inputs.email);
           onClose();
-          localStorage.setItem("quickShopToken", e.token);
+
           dispatch(updateState({ data: e }));
           toast({
             title: "Success",

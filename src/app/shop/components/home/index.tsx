@@ -20,25 +20,32 @@ import { updateState, reset, UserState } from "@/redux/features/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useGetUserQuery } from "@/redux/features/api/authUserSlice";
 import UnVerifiedModalContainer from "../auth/verifyEmailModal";
+import { useUserState } from "@/app/hooks/setGetUser";
+import Cookies from 'js-cookie'
+
 
 
 export const HomeContainer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [test, setTest] = useState(false);
   const [skip, setSkip] = useState(true);
-  const data = useGetUserQuery(
-    {
-      refetchOnMountOrArgChange: true,
-    },
-    { skip: skip }
-  );
+  // const data = useGetUserQuery(
+  //   {
+  //     refetchOnMountOrArgChange: true,
+  //   },
+  //   { skip: skip }
+  // );
 
-  const user = useAppSelector(
-    (state: { userDataReducer: UserState }) => state.userDataReducer
-  );
+  // const user = useAppSelector(
+  //   (state: { userDataReducer: UserState }) => state.userDataReducer
+  // );
+  const {getUserData,setUserDataQuery}= useUserState(skip)
+  const user: UserState = getUserData()
+  const data = setUserDataQuery()
 
   const verified = user?.data?.user?.verified.toString() as string;
   if (typeof window !== "undefined") {
+    //localStorage.removeItem('chakra-ui-color-mode')
     console.log(verified,'for local')
  if (user?.data?.user && user?.data?.user !== undefined){
     if (user?.data?.user?.verified && user?.data?.user?.verified !== undefined) {
@@ -50,7 +57,8 @@ export const HomeContainer = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      if (localStorage.getItem("quickShopToken")) {
+      if (Cookies.get('qs_token')) {
+        console.log(Cookies.get('qs_token'))
         setSkip(false);
         if (localStorage.getItem("quickChopVerified") === "a1fh") {
           onOpen();

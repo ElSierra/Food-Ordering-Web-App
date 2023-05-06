@@ -19,6 +19,7 @@ import { updateState, reset, UserState } from "@/redux/features/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useState } from "react";
 import { useLogOutQuery } from "@/redux/features/api/authUserSlice";
+import Cookies from 'js-cookie'
 
 export const AuthMenu = () => {
   const user = useAppSelector(
@@ -39,7 +40,7 @@ export const AuthMenu = () => {
     { skip: skip }
   );
   if (data.isSuccess){
-    localStorage.removeItem("quickShopToken");
+    Cookies.remove('qs_token')
     localStorage.removeItem("quickChopUserEmail");
   };
 

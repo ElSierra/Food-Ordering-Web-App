@@ -1,28 +1,27 @@
-"use client";
-
 import { useVerifyOTPMutation } from "@/redux/features/api/userSlice";
-import { Box, Flex, Input } from "@chakra-ui/react";
+import { Box, Center, Flex, Input, Spinner, useToast } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { updateState, reset } from "@/redux/features/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import Cookies from "js-cookie";
+import OTPInput from "react-otp-input";
 
 export default function EnterOTP({ onClose }: { onClose: () => void }) {
   const dispatch = useAppDispatch();
+  const toast = useToast();
   const [verifyOTP, response] = useVerifyOTPMutation();
-  const [otp, setOtp] = useState({ 1: "", 2: "", 3: "", 4: "" });
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setOtp({
-      ...otp,
-      [e.target.name]: e.target.value,
-    });
-  };
+  console.log("🚀 ~ file: enterOTP.tsx:13 ~ EnterOTP ~ response:", response);
+  const [otp, setOtp] = useState("");
+
+  
+
+console.log(otp)
 
   useEffect(() => {
-    const allNumber = otp[1] + otp[2] + otp[3] + otp[4];
-    if (allNumber.length === 4) {
+    if (otp.length === 4) {
       verifyOTP({
         email: localStorage.getItem("quickChopUserEmail"),
-        otp: allNumber,
+        otp: otp,
       })
         .unwrap()
         .then((response) => {
@@ -30,62 +29,73 @@ export default function EnterOTP({ onClose }: { onClose: () => void }) {
             "🚀 ~ file: enterOTP.tsx:24 ~ useEffect ~ response:",
             response
           );
-          localStorage.setItem("quickShopToken", response.token);
-          dispatch(updateState({data: response}));
+
+          Cookies.set("qs_token", response.token, { expires: 7 });
+          dispatch(updateState({ data: response }));
           onClose();
         })
         .catch((e) => {
-          console.log("🚀 ~ file: enterOTP.tsx:24 ~ useEffect ~ error:", e);
+          console.log(
+            "🚀 ~ file: enterOTP.tsx:24 ~ useEffect ~ error:",
+            e.data?.msg
+          );
+          toast({
+            title: "Error",
+            description: e.data?.msg,
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
         });
     }
-    console.log(
-      "🚀 ~ file: enterOTP.tsx:17 ~ useEffect ~ allNumber:",
-      allNumber.length
-    );
+  
   }, [otp]);
 
   return (
     <Flex gap="20px">
-      <Input
-        maxLength={1}
-        textAlign={"center"}
-        fontSize={"50px"}
-        height={"100px"}
-        width={"100%"}
-        onChange={handleChange}
-        name="1"
-        value={otp[1]}
-      />
-      <Input
-        maxLength={1}
-        onChange={handleChange}
-        textAlign={"center"}
-        fontSize={"50px"}
-        height={"100px"}
-        width={"100%"}
-        name="2"
-        value={otp[2]}
-      />{" "}
-      <Input
-        maxLength={1}
-        textAlign={"center"}
-        onChange={handleChange}
-        fontSize={"50px"}
-        height={"100px"}
-        width={"100%"}
-        name="3"
-        value={otp[3]}
-      />{" "}
-      <Input
-        maxLength={1}
-        textAlign={"center"}
-        onChange={handleChange}
-        fontSize={"50px"}
-        height={"100px"}
-        width={"100%"}
-        name="4"
-        value={otp[4]}
-      />
+      {response.isLoading ? (
+        <Flex padding="30px" w="100%" align={"center"} justify={"center"}>
+          <Spinner thickness="4px" size="lg" />{" "}
+        </Flex>
+      ) : (
+        <>
+          {/* {[1, 2, 3, 4].map((digit, idx) => {
+            return (
+              <Input
+                key={idx}
+                autoComplete="one-time-code"
+                maxLength={4}
+                textAlign={"center"}
+                pattern="\d{1}"
+                fontSize={"50px"}
+                height={"100px"}
+                width={"100%"}
+                name={idx.toString()}
+                onChange={(e)=>{setOtp(e.target.name)}}
+                value={otp}
+              />
+            );
+          })} */}
+          <OTPInput
+            value={otp}
+            onChange={setOtp}
+            numInputs={4}
+            renderSeparator={<div style={{ minWidth: "20px" }}></div>}
+            renderInput={(props) => (
+              <input
+                {...props}
+                style={{
+                  width: "100%",
+                  textAlign: "center",
+                  fontSize: "60px",
+                  height: "100px",
+                  borderRadius: "10px",
+                }}
+              />
+            )}
+          />
+        </>
+      )}
     </Flex>
   );
 }
