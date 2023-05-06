@@ -16,6 +16,8 @@ export const MobileSearchBar = () => {
   const iconColor = useColorModeValue("#0C513F", "#D5D5D5");
   const border = useColorModeValue("#303030", "#F7F6F6");
 
+  const bgBox = useColorModeValue("#FFFCFC", "#000000");
+
   return (
     <Box
    
@@ -24,7 +26,7 @@ export const MobileSearchBar = () => {
       padding={'0px 20px 20px 20px'}
 
       display={{base: "block", lg: "none"}}
-      bgColor={"black"}
+      bgColor={bgBox}
     >
       <Center>
         {" "}

@@ -1,7 +1,8 @@
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import NavBar from "./components/header/navBar";
-import { ColorModeScript } from "@chakra-ui/react";
+import { Box, ColorModeScript, Flex } from "@chakra-ui/react";
 import theme from "../chakra/themes";
+import BottomBar from "./components/bottomBar";
 
 export const metadata = {
   title: "Quick Chop | Order",
@@ -20,6 +21,7 @@ export default function RootLayout({
     <>
       <NavBar />
       {children}
+      <BottomBar/>
     </>
   );
 }
