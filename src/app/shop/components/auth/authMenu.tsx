@@ -10,7 +10,7 @@ import {
   Box,
   Center,
 } from "@chakra-ui/react";
-import { Login, LoginCurve, Logout } from "iconsax-react";
+import { Login, LoginCurve, Logout, Profile } from "iconsax-react";
 import ModalContainer from "./modalContainer";
 import { AuthPage } from "./authPage";
 import { User } from "@prisma/client";
@@ -59,36 +59,47 @@ export const AuthMenu = () => {
         <Box>
           <Avatar
             src={user?.data?.user?.photo || undefined}
-            size={"md"}
+            size={{base: "sm", md: "md"}}
             name={user?.data?.user?.name || ""}
             display={user.loading ? "none" : "block"}
             pointerEvents={"none"}
             placeholder="./default.avif"
           />
-          <Center>
+          <Center mr='20px' >
             <Spinner
               display={user.loading ? "block" : "none"}
               zIndex={1}
               position={"absolute"}
-              color="blue"
+            
               thickness="4px"
-              size={"lg"}
+              size={{base: "sm", md: "md"}}
             />
           </Center>
         </Box>
       </MenuButton>
-      <MenuList minWidth={"10px"} padding={"2px"}>
+      <MenuList >
         <MenuItem
-          padding={"20px"}
-          borderTop={0}
-          borderBottom={0}
-          _active={{ backgroundColor: "transparent" }}
-          _hover={{ backgroundColor: "transparent" }}
-          icon={user.data ? <Logout /> : <LoginCurve />}
+          // padding={"20px"}
+          // borderTop={0}
+          // borderBottom={0}
+          // _active={{ backgroundColor: "transparent" }}
+          // _hover={{ backgroundColor: "transparent" }}
+          icon={user.data ? <Logout size={'16px'}/> : <LoginCurve />}
           onClick={user.data ? logOut : onOpen}
         >
           {user.data ? "Logout" : "Login"}
         </MenuItem>
+        {user.data ? <MenuItem
+          // padding={"20px"}
+          // borderTop={0}
+          // borderBottom={0}
+          // _active={{ backgroundColor: "transparent" }}
+          // _hover={{ backgroundColor: "transparent" }}
+          icon= {<Profile  size={'16px'} /> }
+       
+        >
+          { "Profile" }
+        </MenuItem>: null}
       </MenuList>
       <ModalContainer isOpen={isOpen} onClose={onClose} />
     </Menu>

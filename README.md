@@ -3,8 +3,21 @@
 This is a food delivery app built using Next.js.
 💻 <a href="https://github.com/ElSierra/Quick-chop-api.git">Backend Node.js Repo</a>
 
+## Screenshots
 
-![Login Screen](./screenshot/login.png)
+| ![Login Screen](./screenshot/login.png) | 
+|:--:| 
+| *Login* |
+
+| ![Home Screen](./screenshot/home-dark.png) | 
+|:--:| 
+| *Home (Dark)* |
+
+| ![Home Screen](./screenshot/home-light.png) | 
+|:--:| 
+| *Home (Light)* |
+
+
 
 ## Getting Started
 

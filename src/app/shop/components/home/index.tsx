@@ -22,6 +22,7 @@ import { useGetUserQuery } from "@/redux/features/api/authUserSlice";
 import UnVerifiedModalContainer from "../auth/verifyEmailModal";
 import { useUserState } from "@/app/hooks/setGetUser";
 import Cookies from 'js-cookie'
+import { SearchBar } from "./mobileSearchBar";
 
 
 
@@ -45,7 +46,7 @@ export const HomeContainer = () => {
 
   const verified = user?.data?.user?.verified.toString() as string;
   if (typeof window !== "undefined") {
-    //localStorage.removeItem('chakra-ui-color-mode')
+    localStorage.removeItem('chakra-ui-color-mode')
     console.log(verified,'for local')
  if (user?.data?.user && user?.data?.user !== undefined){
     if (user?.data?.user?.verified && user?.data?.user?.verified !== undefined) {
@@ -76,8 +77,9 @@ export const HomeContainer = () => {
   return (
     <>
       <UnVerifiedModalContainer isOpen={isOpen} onClose={onClose} />
-      <Flex mt="120px" as={"main"} flexWrap={"wrap"} flexDirection={"column"}>
+      <Flex mt={{base: "90px", lg: "120px"}} as={"main"} flexWrap={"wrap"} flexDirection={"column"}>
         <Box id="explore" as={"section"} w="100%">
+        <SearchBar />
           <Text fontWeight={"medium"} fontSize={"2xl"}>
             Explore Categories{" "}
           </Text>
@@ -136,7 +138,8 @@ export const HomeContainer = () => {
             }}
           >
             <Banner
-              bgImage="./banner1-bg.png"
+            
+              bgImage="./bg1.svg"
               heading={"Welcome to QuickChop"}
               subHeading={
                 "No cooking, no hassle. Just tasty food delivered to your door."
@@ -148,13 +151,13 @@ export const HomeContainer = () => {
               }
             />
             <Banner
-              color={banner2Color}
-              bgImage="./banner2-bg.png"
+              color={'black'}
+              bgImage="./bg2.svg"
               heading={"Order anywhere"}
               subHeading={
-                "No cooking, no hassle. Just tasty food delivered to your door."
+                "No location we no fit reach."
               }
-              asset={<LocationTick variant="Bulk" size={"150px"} />}
+              asset={<LocationTick   color={'black'} variant="Bulk" size={"150px"} />}
             />
           </Flex>
         </Box>

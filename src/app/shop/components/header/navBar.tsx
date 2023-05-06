@@ -5,26 +5,23 @@ import {
   Box,
   Center,
   Flex,
-  Modal,
+  Text,
   Spacer,
   useColorModeValue,
-  useDisclosure,
+  useMediaQuery,
+  HStack,
+  IconButton,
 } from "@chakra-ui/react";
 
 import Logo from "../assets/logo-v2.svg";
 import Image from "next/image";
-import ModalContainer from "../auth/modalContainer";
-import { AuthPage } from "../auth/authPage";
+
 import { SearchBar } from "./searchBar";
 import { AuthMenu } from "../auth/authMenu";
-import { useEffect } from "react";
-import { useGetUserQuery } from "@/redux/features/api/authUserSlice";
-
-
+import { useUserState } from "@/app/hooks/setGetUser";
+import { ArrowDown2, BagHappy, WalletMoney } from "iconsax-react";
 
 export default function NavBar() {
-
- 
   // const {
   //   data: userData,
   //   isLoading: isGetLoading,
@@ -36,8 +33,10 @@ export default function NavBar() {
   // console.log("🚀 ~ file: navBar.tsx:39 ~ NavBar ~ getError:", getError);
 
   const borderBottom = useColorModeValue("#F7F6F6", "#303030");
-  const bg = useColorModeValue("#FFFFFF", "#1A1A1A");
+  const bg = useColorModeValue("#FFFFFF", "#000000");
+  const { getUserData } = useUserState();
 
+  const user = getUserData();
   return (
     <Box
       as="nav"
@@ -64,8 +63,30 @@ export default function NavBar() {
           <Image width={80} src={Logo} alt="Quick-chop" />
         </Box>
 
+        <>
+          <Spacer />
+          <SearchBar />
+        </>
         <Spacer />
-        <SearchBar />
+        {user.data?.user && (
+          <Center>
+            <HStack  mr={{'base': "10px", "lg": "20px"}}>
+              <WalletMoney variant="Bulk" size={"20px"} />
+              <Text fontWeight={"bolder"}>
+                ₦ {user.data?.user.balance || 0}{" "}
+              </Text>
+              <ArrowDown2 size="15px" style={{marginLeft: '2px'}} />
+            </HStack>
+            <Box>
+              <HStack>
+                {" "}
+                <BagHappy variant="Bulk" size={"20px"} />{" "}
+                
+                <ArrowDown2 size="15px" style={{marginLeft: '2px'}} />
+              </HStack>
+            </Box>
+          </Center>
+        )}
         <Center
           ml={{
             base: "30px",
@@ -78,9 +99,9 @@ export default function NavBar() {
           }}
         >
           <AuthMenu
-            // userData={userData}
-            // isGetLoading={isGetLoading}
-            //isLoggedIn={false}
+          // userData={userData}
+          // isGetLoading={isGetLoading}
+          //isLoggedIn={false}
           />
         </Center>
       </Flex>

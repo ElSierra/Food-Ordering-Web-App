@@ -21,10 +21,11 @@ export const Banner = ({
       w={{ base: "100%", md: "48%" }}
       minW={{ base: "100%", md: "48%" }}
       h="200px"
+      bgColor ={''}
       bgImage={bgImage}
       backgroundRepeat={"no-repeat"}
-      backgroundPosition={"center"}
-      backgroundSize={"fit"}
+      backgroundPosition={"fit"}
+      backgroundSize={"cover"}
     >
       <Box w="60%">
         <Text
