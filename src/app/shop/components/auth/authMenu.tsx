@@ -89,11 +89,7 @@ export const AuthMenu = () => {
           {user.data ? "Logout" : "Login"}
         </MenuItem>
         {user.data ? <MenuItem
-          // padding={"20px"}
-          // borderTop={0}
-          // borderBottom={0}
-          // _active={{ backgroundColor: "transparent" }}
-          // _hover={{ backgroundColor: "transparent" }}
+      
           icon= {<Profile  size={'16px'} /> }
        
         >
