@@ -17,6 +17,11 @@ const theme = extendTheme({
     xl: "1000px",
     xxl: "1280px",
     vxl: "1500px",
+    gridBase: "0px",
+    gridSm: "500px",
+    gridLg: "650px",
+    gridXl: "700px"
+
   },
   
 });

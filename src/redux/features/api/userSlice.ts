@@ -3,8 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const userSlice = createApi({
   reducerPath: "userSlice",
   baseQuery: fetchBaseQuery({
-    baseUrl: WEBSITE_URL,
-    
+    baseUrl: `${WEBSITE_URL}/auth`,
   }),
 
   tagTypes: ["Post"],
