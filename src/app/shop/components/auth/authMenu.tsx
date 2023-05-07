@@ -3,19 +3,18 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  IconButton,
+  
   Avatar,
   useDisclosure,
   Spinner,
   Box,
   Center,
 } from "@chakra-ui/react";
-import { Login, LoginCurve, Logout, Profile } from "iconsax-react";
+import { LoginCurve, Logout, Profile } from "iconsax-react";
 import ModalContainer from "./modalContainer";
-import { AuthPage } from "./authPage";
-import { User } from "@prisma/client";
+
 import { useRouter } from "next/navigation";
-import { updateState, reset, UserState } from "@/redux/features/authSlice";
+import { reset, UserState } from "@/redux/features/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useState } from "react";
 import { useLogOutQuery } from "@/redux/features/api/authUserSlice";
