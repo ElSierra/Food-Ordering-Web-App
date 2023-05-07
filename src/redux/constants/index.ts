@@ -1,1 +1,1 @@
-export const WEBSITE_URL = 'http://localhost/api'
+export const WEBSITE_URL = 'https://api.ojoisaac.me/api'
