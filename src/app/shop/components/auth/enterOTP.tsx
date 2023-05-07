@@ -55,7 +55,7 @@ export default function EnterOTP({ onClose }: { onClose: () => void }) {
           });
         });
     }
-  }, [otp]);
+  }, [otp,dispatch,onClose,toast,verifyOTP]);
 
   return (
     <Flex gap="20px">
