@@ -23,7 +23,7 @@ export default function RestaurantCard({
   const [isLoading, setLoading] = useState(true);
   return (
     <Box
-      h={"300px"}
+      h={"330px"}
       w="100%"
       borderRadius={"20px"}
       _hover={{
@@ -64,12 +64,12 @@ export default function RestaurantCard({
           </Text>
           <Spacer />
           <HStack>
-            <Star variant="Bulk" />
+            <Star variant="Bulk" size={'20px'} />
             <Text>5.00</Text>
           </HStack>
         </HStack>
         <HStack>
-          <Clock variant="Bulk" />
+          <Clock variant="Bulk" size={'20px'} />
           <Text>54-64 mins</Text>
         </HStack>
       </Box>

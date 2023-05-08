@@ -11,6 +11,7 @@ import {
   useMediaQuery,
   HStack,
   IconButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import Logo from "../assets/logo-v2.svg";
@@ -21,6 +22,7 @@ import { AuthMenu } from "../auth/authMenu";
 import { useUserState } from "@/app/hooks/setGetUser";
 import { ArrowDown2, BagHappy, WalletMoney } from "iconsax-react";
 import { MobileSearchBar } from "./mobileSearchBar";
+import SearchModal from "../search";
 
 export default function NavBar() {
   // const {
@@ -38,8 +40,11 @@ export default function NavBar() {
   const { getUserData } = useUserState();
 
   const user = getUserData();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box
+   <> 
+   <SearchModal isOpen={isOpen} onClose={onClose}/>
+   <Box
       as="nav"
       position="fixed"
       display={"block"}
@@ -67,7 +72,7 @@ export default function NavBar() {
 
         <>
           <Spacer />
-          <SearchBar />
+          <SearchBar onOpen = {onOpen} />
         </>
         <Spacer />
         {user.data?.user && (
@@ -107,7 +112,7 @@ export default function NavBar() {
           />
         </Center>
       </Flex>
-      <MobileSearchBar />
-    </Box>
+      <MobileSearchBar  onOpen = {onOpen}/>
+    </Box></>
   );
 }

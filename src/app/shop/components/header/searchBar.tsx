@@ -3,13 +3,14 @@
 import { Text, Button, HStack, Center, useColorModeValue } from "@chakra-ui/react";
 import { SearchNormal } from "iconsax-react";
 
-export const SearchBar = () => {
+export const SearchBar = ({onOpen}: {onOpen : ()=> void}) => {
   const searchTextColor = useColorModeValue("#999999", "#F1ECEC");
   const bg = useColorModeValue("#F2F2F2", "#303030");
   const iconColor = useColorModeValue("#0C513F","#D5D5D5")
   return (
     <Center display={{base: "none", lg: "block"}}>
       <Button
+      onClick={onOpen}
         bg={bg}
         justifyContent={"left"}
         minW={{
