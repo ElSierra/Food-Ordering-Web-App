@@ -1,8 +1,7 @@
 import { Restaurant } from "@prisma/client";
 import { prisma } from "../../../lib/prisma";
 import { HomeContainer } from "./components/home";
-
-
+import {getPlaiceholder} from 'plaiceholder'
 
 export default async function Home() {
   const fetchRestaurants = async () => {
@@ -13,11 +12,15 @@ export default async function Home() {
     return restaurant;
   };
 
+  
+ 
+
 
 
 
   console.log(await fetchRestaurants());
   const restaurants: Restaurant[] = await fetchRestaurants();
+ 
   return (
     <main
       style={{

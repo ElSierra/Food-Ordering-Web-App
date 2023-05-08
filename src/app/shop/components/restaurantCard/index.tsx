@@ -3,6 +3,10 @@
 import { Box, HStack, Spacer, Text, useColorModeValue } from "@chakra-ui/react";
 import { Restaurant } from "@prisma/client";
 import { Clock, Star } from "iconsax-react";
+import Image from "next/image";
+import { useState } from "react";
+import { getPlaiceholder } from "plaiceholder";
+import "./loadImage.css";
 
 export default function RestaurantCard({
   restaurant,
@@ -15,6 +19,8 @@ export default function RestaurantCard({
     "1px solid rgba(255,255,255,0.2)"
   );
 
+
+  const [isLoading, setLoading] = useState(true);
   return (
     <Box
       h={"300px"}
@@ -29,12 +35,28 @@ export default function RestaurantCard({
       bg={bg}
       border={borderColor}
     >
-      <Box
-        bgSize={"cover"}
-        borderRadius={"2xl"}
-        bgImage={restaurant.photo}
-        height={"200px"}
-      ></Box>
+      <Box height={"200px"} position={"relative"}>
+        <Box
+          position={"absolute"}
+          top={0}
+          left={0}
+          width={"100%"}
+          height={"100%"}
+        >
+          <Image
+            src={`${restaurant.photo}`}
+            alt={restaurant.name}
+            placeholder="blur"
+            blurDataURL={restaurant.loadingImage}
+            style={{ objectFit: "cover", borderRadius: "10px" }}
+            fill
+            onLoadingComplete={() => {
+              setLoading(false);
+              console.log("it is loaded");
+            }}
+          />
+        </Box>
+      </Box>
       <Box mt="15px">
         <HStack>
           <Text fontWeight={"bolder"} fontSize={"md"}>
