@@ -5,6 +5,7 @@ import {
   Button,
   Flex,
   SimpleGrid,
+  Spinner,
   Text,
   chakra,
   shouldForwardProp,
@@ -94,7 +95,14 @@ export const HomeContainer = ({
         setSkip(true);
       }
     }
-  }, [onOpen]);
+
+    console.log("🚀 ~ file: index.tsx:100 ~ useEffect ~ restaurants.data?.restaurant.length:", restaurants.data?.restaurant.length)
+
+    if (restaurants.data?.restaurant.length === 0){
+    
+      setHasMore(false)
+          }
+  }, [onOpen, restaurants.data?.restaurant.length ]);
 
   const banner2Color = useColorModeValue("#1A1A1A", "#FFFFFF");
 
@@ -104,6 +112,7 @@ export const HomeContainer = ({
 
       <Flex
         mt={{ base: "180px", lg: "120px" }}
+        mb={{ base: "100px", lg: "80px" }}
         as={"main"}
         flexWrap={"wrap"}
         flexDirection={"column"}
@@ -201,12 +210,20 @@ export const HomeContainer = ({
         {restaurantData && restaurantData.length > 0 ? (
           <InfiniteScroll
             className="grid"
-            style={{ marginTop: '60px' }}
+            style={{ marginTop: "60px" }}
             dataLength={restaurantData?.length}
             next={getMoreRestaurants}
             hasMore={hasMore}
-            loader={<h3>loading...</h3>}
-            endMessage={<h4>nothing left</h4>}
+            loader={
+              <Box position={"absolute"} left={"50%"} right={"50%"} bottom={20}>
+                {" "}
+                <Spinner thickness="4px" size={{ base: "sm", md: "md" }} />
+              </Box>
+            }
+            endMessage={ <Box position={"absolute"} left={"50%"} right={"50%"} bottom={20}>
+            {" "}
+           <Text>😉</Text>
+          </Box>}
           >
             {restaurantData
               ? restaurantData.map((restaurant) => {

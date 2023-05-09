@@ -11,10 +11,13 @@ import {
   ModalOverlay,
   Flex,
   useColorModeValue,
+  Input,
+  InputGroup,
+  InputLeftElement,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-import { CloseCircle, CloseSquare } from "iconsax-react";
+import { CloseCircle, CloseSquare, SearchNormal } from "iconsax-react";
 
 export default function SearchModal({
   isOpen,
@@ -55,7 +58,27 @@ export default function SearchModal({
             <CloseSquare size="40" variant="Bulk" />
           </Box>
         </Flex>
-        <ModalBody></ModalBody>
+        <ModalBody>
+          <InputGroup>
+            <InputLeftElement>
+              <SearchNormal />
+            </InputLeftElement>
+            <Input
+              bg={bg}
+              justifyContent={"left"}
+              placeholder="Search Quickchop"
+              minW={{
+                base: "50px",
+                sm: "300px",
+                md: "300px",
+                lg: "300px",
+                xl: "300px",
+                xxl: "300px",
+                vxl: "300px",
+              }}
+            />
+          </InputGroup>
+        </ModalBody>
       </ModalContent>
     </Modal>
   );
