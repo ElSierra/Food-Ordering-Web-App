@@ -1,23 +1,28 @@
 import {
   Box,
-  Button,
-  IconButton,
+  
   Modal,
   ModalBody,
-  ModalCloseButton,
+ 
   ModalContent,
-  ModalFooter,
-  ModalHeader,
+  
   ModalOverlay,
   Flex,
   useColorModeValue,
   Input,
   InputGroup,
   InputLeftElement,
-} from "@chakra-ui/react";
-import React, { useState } from "react";
 
-import { CloseCircle, CloseSquare, SearchNormal } from "iconsax-react";
+  Skeleton,
+} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+
+import {CloseSquare, SearchNormal } from "iconsax-react";
+import { RestaurantsCardSearch } from "./searchCard";
+import { useGetRestaurantsQuery } from "@/redux/features/api/restaurantGetSlice";
+import { useDebounce } from "./searchdeBounce";
+
+
 
 export default function SearchModal({
   isOpen,
@@ -27,6 +32,35 @@ export default function SearchModal({
   onClose: () => void;
 }) {
   const bg = useColorModeValue("#FFFFFF", "#000000");
+
+  const [searchParam, setSearchParam] = useState("");
+  const [skip, setSkip] = useState(true);
+  const debounceValue = useDebounce(searchParam, 1000);
+  const restaurants = useGetRestaurantsQuery(
+    {
+      name: debounceValue,
+      start: 0,
+      take: 20,
+    },
+    { skip: skip }
+  );
+
+ 
+
+  useEffect(() => {
+    console.log(restaurants.data, "for search");
+    if (debounceValue.length <= 0) {
+      setSkip(true);
+    } else {
+      setSkip(false);
+    }
+   
+  }, [debounceValue, restaurants]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchParam(e.target.value);
+  };
+
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -66,7 +100,9 @@ export default function SearchModal({
             <Input
               bg={bg}
               justifyContent={"left"}
+              value={searchParam}
               placeholder="Search Quickchop"
+              onChange={handleChange}
               minW={{
                 base: "50px",
                 sm: "300px",
@@ -78,6 +114,27 @@ export default function SearchModal({
               }}
             />
           </InputGroup>
+          <Box mt="30px">
+            {restaurants.isSuccess ? (
+              restaurants.data?.restaurant.map((restaurants) => {
+                console.log("er knkk");
+                return (
+                  <RestaurantsCardSearch
+                    key={restaurants.id}
+                    restaurant={restaurants}
+                  />
+                );
+              })
+            ) : restaurants.isFetching || restaurants.isLoading ? (
+              <Flex flexDirection={'column'}>
+                <Skeleton  mb='10px' height="60px" />
+                <Skeleton  mb='10px' height="60px" />
+                <Skeleton  mb='10px' height="60px" />
+                <Skeleton  mb='10px' height="60px" />
+                <Skeleton  mb='10px' height="60px" />
+              </Flex>
+            ) : null}
+          </Box>
         </ModalBody>
       </ModalContent>
     </Modal>

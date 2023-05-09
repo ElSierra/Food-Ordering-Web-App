@@ -2,14 +2,12 @@
 
 import {
   Box,
-  Button,
+
   Flex,
-  SimpleGrid,
+
   Spinner,
   Text,
-  chakra,
-  shouldForwardProp,
-  useColorModeValue,
+ 
   useDisclosure,
 } from "@chakra-ui/react";
 import ExploreBox from "../explore";
@@ -26,7 +24,6 @@ import Cookies from "js-cookie";
 import Image from "next/image";
 import QuickChop from "../assets/quickchop.svg";
 import RestaurantCard from "../restaurantCard";
-import { motion, isValidMotionProp } from "framer-motion";
 import { Restaurant } from "@prisma/client";
 import RestaurantCardLoading from "../restaurantCard/loading";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -40,6 +37,8 @@ export const HomeContainer = ({
   restaurant: Restaurant[];
   isLoadingPage: Boolean;
 }) => {
+
+  
   console.log("here");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -75,7 +74,7 @@ export const HomeContainer = ({
     if (restaurants.data) {
       setRestaurantData((restShop) => [
         ...restShop,
-        ...restaurants.data.restaurant,
+        ...restaurants?.data?.restaurant || [],
       ]);
     }
   };
@@ -104,7 +103,7 @@ export const HomeContainer = ({
           }
   }, [onOpen, restaurants.data?.restaurant.length ]);
 
-  const banner2Color = useColorModeValue("#1A1A1A", "#FFFFFF");
+
 
   return (
     <>

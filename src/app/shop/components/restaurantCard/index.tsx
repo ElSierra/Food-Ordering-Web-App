@@ -4,9 +4,10 @@ import { Box, HStack, Spacer, Text, useColorModeValue } from "@chakra-ui/react";
 import { Restaurant } from "@prisma/client";
 import { Clock, Star } from "iconsax-react";
 import Image from "next/image";
-import { useState } from "react";
-import { getPlaiceholder } from "plaiceholder";
+
+
 import "./loadImage.css";
+import { useRouter } from "next/navigation";
 
 export default function RestaurantCard({
   restaurant,
@@ -18,13 +19,13 @@ export default function RestaurantCard({
     "4px solid black",
     "1px solid rgba(255,255,255,0.2)"
   );
+  const router = useRouter();
 
-
-  const [isLoading, setLoading] = useState(true);
   return (
     <Box
       h={"330px"}
       w="100%"
+      onClick={() => router.push(`shop/restaurant/${restaurant.id}`)}
       borderRadius={"20px"}
       _hover={{
         backgroundImage: "linear-gradient(to right, #FBB96D46, #00FF8C55);",
@@ -50,10 +51,7 @@ export default function RestaurantCard({
             blurDataURL={restaurant.loadingImage}
             style={{ objectFit: "cover", borderRadius: "10px" }}
             fill
-            onLoadingComplete={() => {
-              setLoading(false);
-              console.log("it is loaded");
-            }}
+           
           />
         </Box>
       </Box>

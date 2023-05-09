@@ -1,18 +1,16 @@
 import {
   Box,
-  Button,
+  
   Modal,
   ModalBody,
-  ModalCloseButton,
+
   ModalContent,
-  ModalFooter,
-  ModalHeader,
+
   ModalOverlay,
   useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { AuthMenu } from "./authMenu";
-import { AuthPage } from "./authPage";
+
 import { UnVerifiedUserPage } from "./unVerifiedUser";
 
 export default function UnVerifiedModalContainer({
