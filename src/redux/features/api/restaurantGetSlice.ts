@@ -7,9 +7,12 @@ export const restaurantApi = createApi({
     baseUrl: WEBSITE_URL,
   }),
 
-  tagTypes: ["Restaurant"],
+  tagTypes: ["Restaurant", "rating"],
   endpoints: (builder) => ({
-    getRestaurants: builder.query<{restaurant:Restaurant[]}, {name?: string, start?: number, take?: number}>({
+    getRestaurants: builder.query<
+      { restaurant: Restaurant[] },
+      { name?: string; start?: number; take?: number }
+    >({
       query: (payload) => {
         if (payload.name) {
           if (payload.start && payload.take) {
@@ -29,4 +32,4 @@ export const restaurantApi = createApi({
     }),
   }),
 });
-export const { useGetRestaurantsQuery } = restaurantApi;
+export const { useGetRestaurantsQuery} = restaurantApi;

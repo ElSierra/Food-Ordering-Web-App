@@ -23,6 +23,7 @@ import { useUserState } from "@/app/hooks/setGetUser";
 import { ArrowDown2, BagHappy, WalletMoney } from "iconsax-react";
 import { MobileSearchBar } from "./mobileSearchBar";
 import SearchModal from "../search";
+import Link from "next/link";
 
 export default function NavBar() {
   // const {
@@ -66,9 +67,10 @@ export default function NavBar() {
 
         // borderEndEndRadius={'20px'}
       >
+        <Link href={'/shop'}>
         <Box>
           <Image width={80} src={Logo} alt="Quick-chop" />
-        </Box>
+        </Box></Link>
 
         <>
           <Spacer />

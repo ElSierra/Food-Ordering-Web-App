@@ -1,1 +1,1 @@
-export const WEBSITE_URL = 'https://api.ojoisaac.me/api'
+export const WEBSITE_URL = 'https://quickchop.ojoisaac.me/api'

@@ -6,6 +6,7 @@ import { userAuthApi } from "./features/api/authUserSlice";
 import { createWrapper } from "next-redux-wrapper";
 import userDataReducer from "./features/authSlice";
 import { restaurantApi } from "./features/api/restaurantGetSlice";
+import { restaurantUserApi } from "./features/api/restaurantUserPutSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     [userSlice.reducerPath]: userSlice.reducer,
     [userAuthApi.reducerPath]: userAuthApi.reducer,
     [restaurantApi.reducerPath]: restaurantApi.reducer,
+    [restaurantUserApi.reducerPath] : restaurantUserApi.reducer,
     userDataReducer,
   },
 
@@ -21,7 +23,9 @@ export const store = configureStore({
     getDefaultMiddleware()
       .concat(userSlice.middleware)
       .concat(userAuthApi.middleware)
-      .concat(restaurantApi.middleware),
+      .concat(restaurantApi.middleware)
+      .concat(restaurantUserApi.middleware)
+      ,
 });
 
 export type RootState = ReturnType<typeof store.getState>;

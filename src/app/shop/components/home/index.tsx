@@ -2,12 +2,12 @@
 
 import {
   Box,
-
+  Button,
+  Center,
   Flex,
-
+  IconButton,
   Spinner,
   Text,
- 
   useDisclosure,
 } from "@chakra-ui/react";
 import ExploreBox from "../explore";
@@ -25,10 +25,17 @@ import Image from "next/image";
 import QuickChop from "../assets/quickchop.svg";
 import RestaurantCard from "../restaurantCard";
 import { Restaurant } from "@prisma/client";
+import Lottie from "lottie-react";
+import animationData from "../assets/food.json";
+import animationData2 from "../assets/delivery.json";
 import RestaurantCardLoading from "../restaurantCard/loading";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useGetRestaurantsQuery } from "@/redux/features/api/restaurantGetSlice";
 import "./grid.css";
+import Link from "next/link";
+import { ArrowSquareUp, ArrowUp } from "iconsax-react";
+import NProgress from 'nprogress';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 export const HomeContainer = ({
   restaurant: restaurantFromServer,
@@ -37,13 +44,13 @@ export const HomeContainer = ({
   restaurant: Restaurant[];
   isLoadingPage: Boolean;
 }) => {
-
-  
   console.log("here");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [skip, setSkip] = useState(true);
-
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+ 
   const [restaurantData, setRestaurantData] = useState(restaurantFromServer);
   const { getUserData, setUserDataQuery } = useUserState(skip);
   const user: UserState = getUserData();
@@ -74,13 +81,13 @@ export const HomeContainer = ({
     if (restaurants.data) {
       setRestaurantData((restShop) => [
         ...restShop,
-        ...restaurants?.data?.restaurant || [],
+        ...(restaurants?.data?.restaurant || []),
       ]);
     }
   };
 
   const [hasMore, setHasMore] = useState(true);
-
+  
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (Cookies.get("qs_token")) {
@@ -93,20 +100,24 @@ export const HomeContainer = ({
       } else {
         setSkip(true);
       }
-    }
-
-    console.log("🚀 ~ file: index.tsx:100 ~ useEffect ~ restaurants.data?.restaurant.length:", restaurants.data?.restaurant.length)
-
-    if (restaurants.data?.restaurant.length === 0){
     
-      setHasMore(false)
-          }
-  }, [onOpen, restaurants.data?.restaurant.length ]);
+   }
 
+  const url = pathname
+  console.log('🌍',url)
+    console.log(
+      "🚀 ~ file: index.tsx:100 ~ useEffect ~ restaurants.data?.restaurant.length:",
+      restaurants.data?.restaurant.length
+    );
 
+    if (restaurants.data?.restaurant.length === 0) {
+      setHasMore(false);
+    }
+  }, [onOpen, restaurants.data?.restaurant.length, pathname]);
 
   return (
     <>
+    
       <UnVerifiedModalContainer isOpen={isOpen} onClose={onClose} />
 
       <Flex
@@ -159,7 +170,10 @@ export const HomeContainer = ({
           <Flex
             gap={"20px"}
             justify={"space-between"}
-            overflowX="auto"
+            overflowX="scroll"
+            w="100%"
+            overflowY={"hidden"}
+            scrollSnapType={"x mandatory"}
             style={{ scrollbarWidth: "none" }}
             css={{
               "&::-webkit-scrollbar": {
@@ -179,7 +193,15 @@ export const HomeContainer = ({
               bgImage="./bg2.svg"
               heading={"Order anywhere"}
               subHeading={"No location we no fit reach."}
-              asset={<Image width={150} src={QuickChop} alt={"Quick Chop"} />}
+              asset={
+                <Center>
+                  <Lottie
+                    style={{ height: "500px" }}
+                    animationData={animationData}
+                    size={5}
+                  />
+                </Center>
+              }
             />
             <Banner
               bgImage="./bg1.svg"
@@ -188,9 +210,13 @@ export const HomeContainer = ({
                 "No cooking, no hassle. Just tasty food delivered to your door."
               }
               asset={
-                <video controls={false} muted autoPlay loop>
-                  <source src="./vi.webm" type="video/webm" />
-                </video>
+                <Center>
+                  <Lottie
+                    style={{ height: "500px" }}
+                    animationData={animationData2}
+                    size={5}
+                  />
+                </Center>
               }
             />
           </Flex>
@@ -219,15 +245,19 @@ export const HomeContainer = ({
                 <Spinner thickness="4px" size={{ base: "sm", md: "md" }} />
               </Box>
             }
-            endMessage={ <Box position={"absolute"} left={"50%"} right={"50%"} bottom={20}>
-            {" "}
-           <Text>😉</Text>
-          </Box>}
+            endMessage={
+              <Box position={"absolute"}  left={"50%"} right={"50%"} bottom={10}>
+                {" "}
+                <Link href={"shop/#top"} style={{marginTop: '30px'}}>
+                <IconButton aria-label="up" icon={<ArrowSquareUp size="32"/>}/></Link>
+              </Box>
+            }
           >
             {restaurantData
               ? restaurantData.map((restaurant) => {
                   return (
                     <RestaurantCard
+                     user = {user}
                       restaurant={restaurant}
                       key={restaurant.id}
                     />
@@ -236,6 +266,8 @@ export const HomeContainer = ({
               : null}
           </InfiniteScroll>
         ) : null}
+
+        
       </Flex>
     </>
   );

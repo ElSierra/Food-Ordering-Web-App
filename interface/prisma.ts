@@ -1,0 +1,40 @@
+export type UserResponse = {
+  id: string;
+  email: string;
+  phone: string;
+  disable: boolean;
+  name: string;
+  like: {restaurantId: string}[];
+  location: any;
+  dislike: {restaurantId: string}[];
+  orders: [];
+  loginInfo: [];
+  verified: boolean;
+  OTP: number;
+  password: string;
+  photo: string | null;
+  balance: number;
+  locationId: string | null;
+  paymentId: string | null;
+  preferencesId: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type RestaurantResponse = {
+  id: string;
+  name: string;
+  verified: boolean;
+  loadingImage: string;
+  orders: [];
+  menu: [];
+  location: any;
+  available: boolean;
+  slug: string;
+  photo: string;
+  rating: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  locationId: string | null;
+  restaurantAdminId: string | null;
+};

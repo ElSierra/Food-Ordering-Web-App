@@ -11,64 +11,112 @@ model User {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
   email    String  @unique
   phone    String
+  disable  Boolean @default(false)
   name     String
   verified Boolean @default(false)
   OTP      Int     @default(0)
   password String
   photo    String?
 
-  balance       Float
-  location      Location?    @relation(fields: [locationId], references: [id])
-  orders        Orders[]
-  payment       Payment?     @relation(fields: [paymentId], references: [id])
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  balance  Float
+  location Location? @relation(fields: [locationId], references: [id])
+  orders   Orders[]
+  payment  Payment?  @relation(fields: [paymentId], references: [id])
+
   locationId    String?      @db.ObjectId
   paymentId     String?      @db.ObjectId
   preferences   Preferences? @relation(fields: [preferencesId], references: [id])
+  like          Like[]
+  dislike       DisLike[]
   preferencesId String?      @db.ObjectId
+  loginInfo     LoginInfo[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@index([verified])
 }
 
 model Rider {
-  id            String       @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  phone         String
-  email         String       @unique
-  password      String
-  photo         String?
-  balance       Float        @default(0)
-  verified      Boolean      @default(false)
-  OTP           Int          @default(0)
-  available     Boolean      @default(false)
-  preferences   Preferences? @relation(fields: [preferencesId], references: [id])
-  location      Location?    @relation(fields: [locationId], references: [id])
-  orders        Orders[]
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  locationId    String?      @db.ObjectId
-  preferencesId String?      @db.ObjectId
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  phone       String
+  email       String       @unique
+  password    String
+  like        Like[]
+  dislike     DisLike[]
+  rating      String?
+  photo       String?
+  balance     Float        @default(0)
+  verified    Boolean      @default(false)
+  OTP         Int          @default(0)
+  available   Boolean      @default(false)
+  preferences Preferences? @relation(fields: [preferencesId], references: [id])
+  location    Location?    @relation(fields: [locationId], references: [id])
+  orders      Orders[]
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  locationId    String?     @db.ObjectId
+  preferencesId String?     @db.ObjectId
+  loginInfo     LoginInfo[]
+
+  @@index([verified])
 }
 
 model Restaurant {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  loadingImage String
-  available    Boolean   @default(true)
-  slug         String
-  category     String[]
-  location     Location? @relation(fields: [locationId], references: [id])
-  photo        String
-  menu         Menu[]
-  orders       Orders[]
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  locationId   String?   @db.ObjectId
+  id                String           @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  verified          Boolean          @default(false)
+  loadingImage      String
+  available         Boolean          @default(true)
+  slug              String
+  category          Category[]
+  location          Location?        @relation(fields: [locationId], references: [id])
+  photo             String
+  menu              Menu[]
+  like              Like[]
+  dislike           DisLike[]
+  rating            String?
+  orders            Orders[]
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  locationId        String?          @db.ObjectId
+  LoginInfo         LoginInfo[]
+  RestaurantAdmin   RestaurantAdmin? @relation(fields: [restaurantAdminId], references: [id])
+  restaurantAdminId String?          @db.ObjectId
+}
+
+model RestaurantAdmin {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  email      String       @unique
+  phone      String
+  name       String
+  verified   Boolean      @default(false)
+  OTP        Int          @default(0)
+  password   String
+  photo      String?
+  restaurant Restaurant[]
+  balance    Float
+  payment    Payment?     @relation(fields: [paymentId], references: [id])
+
+  paymentId   String?      @db.ObjectId
+  preferences Preferences? @relation(fields: [preferencesId], references: [id])
+
+  preferencesId String?     @db.ObjectId
+  loginInfo     LoginInfo[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  Location      Location?   @relation(fields: [locationId], references: [id])
+  locationId    String?     @db.ObjectId
+
+  @@index([verified])
 }
 
 model Menu {
   id           String      @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   price        Float
+  available    Boolean     @default(true)
   loadingImage String?
   photo        String?
   restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
@@ -112,9 +160,10 @@ model Payment {
   expiryDate String
   cvv        String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  User            User[]
+  RestauarntAdmin RestaurantAdmin[]
 }
 
 model Location {
@@ -124,9 +173,10 @@ model Location {
   address   String
   createdAt DateTime @default(now())
 
-  User       User[]
-  Rider      Rider[]
-  Restaurant Restaurant[]
+  User            User[]
+  Rider           Rider[]
+  Restaurant      Restaurant[]
+  RestauarntAdmin RestaurantAdmin[]
 }
 
 model Preferences {
@@ -134,8 +184,51 @@ model Preferences {
   mode         mode    @default(LIGHT)
   emailUpdates Boolean @default(true)
 
-  User  User[]
-  Rider Rider[]
+  User            User[]
+  Rider           Rider[]
+  RestauarntAdmin RestaurantAdmin[]
+}
+
+model LoginInfo {
+  id                String           @id @default(auto()) @map("_id") @db.ObjectId
+  ipAddress         String
+  device            String
+  lastLoggedIn      DateTime         @default(now())
+  Rider             Rider?           @relation(fields: [riderId], references: [id])
+  riderId           String?          @db.ObjectId
+  Restaurant        Restaurant?      @relation(fields: [restaurantId], references: [id])
+  restaurantId      String?          @db.ObjectId
+  User              User?            @relation(fields: [userId], references: [id])
+  userId            String?          @db.ObjectId
+  RestauarntAdmin   RestaurantAdmin? @relation(fields: [restauarntAdminId], references: [id])
+  restauarntAdminId String?          @db.ObjectId
+}
+
+model Category {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  type         String
+  Restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String?     @db.ObjectId
+}
+
+model Like {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  Restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String?     @db.ObjectId
+  User         User?       @relation(fields: [userId], references: [id])
+  userId       String?     @db.ObjectId
+  Rider        Rider?      @relation(fields: [riderId], references: [id])
+  riderId      String?     @db.ObjectId
+}
+
+model DisLike {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  Restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String?     @db.ObjectId
+  User         User?       @relation(fields: [userId], references: [id])
+  userId       String?     @db.ObjectId
+  Rider        Rider?      @relation(fields: [riderId], references: [id])
+  riderId      String?     @db.ObjectId
 }
 
 enum orderStatus {
@@ -149,4 +242,9 @@ enum orderStatus {
 enum mode {
   DARK
   LIGHT
+}
+
+enum ratings {
+  LIKE
+  DISLIKE
 }

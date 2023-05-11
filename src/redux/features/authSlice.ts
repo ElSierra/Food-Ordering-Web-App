@@ -1,9 +1,10 @@
 import { User } from "@prisma/client";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { userAuthApi } from "./api/authUserSlice";
+import { UserResponse } from "../../../interface/prisma";
 
 export type UserState = {
-  data: { user: User } | null;
+  data: { user: UserResponse } | null;
   loading: boolean;
   error: any | null;
 };
