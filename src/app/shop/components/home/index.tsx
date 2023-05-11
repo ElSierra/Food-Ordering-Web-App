@@ -59,6 +59,8 @@ export const HomeContainer = ({
     start: restaurantData?.length,
     take: 20,
   });
+
+  console.log('NEXT_PUBLIC_BASE_URL', process.env.NEXT_PUBLIC_BASE_URL)
   console.log(restaurants);
 
   const verified = user?.data?.user?.verified.toString() as string;

@@ -36,30 +36,23 @@ export default function RestaurantCard({
   );
   const [like, setLike] = useState(false);
   const [skip, setSkip] = useState(true);
-const [disableClick, setDisableClick] = useState(user.data?.user?.like.some(obj=> obj.restaurantId === restaurant.id) || user.data?.user?.dislike.some(obj=> obj.restaurantId === restaurant.id))
+
   const rateRestaurant = useRateRestaurantQuery(
     { restaurant: restaurant.id, like },
     { skip: skip }
   );
 
-  console.log(
-    "🚀 ~ file: index.tsx:40 ~ likedAlready:",
-    user.data?.user.like
-  );
-  console.log(
-    "🚀 ~ file: index.tsx:40 ~ likedAlready:",
-    user.data?.user?.like.some(obj=> obj.restaurantId === restaurant.id) || user.data?.user?.dislike.some(obj=> obj.restaurantId === restaurant.id)
-  );
-const disableButton =  user.data?.user?.like.some(obj=> obj.restaurantId === restaurant.id) || user.data?.user?.dislike.some(obj=> obj.restaurantId === restaurant.id)
+
+const disableButton =  user.data?.user?.like?.some(obj=> obj.restaurantId === restaurant.id) || user.data?.user?.dislike?.some(obj=> obj.restaurantId === restaurant.id)
   const handleLike = () => {
     setLike(true);
     setSkip(false);
-    setDisableClick(true)
+    
   };
   const handleDisLike = () => {
     setSkip(false);
     setLike(false);
-    setDisableClick(true)
+
   };
   return (
     <Box
@@ -117,7 +110,7 @@ const disableButton =  user.data?.user?.like.some(obj=> obj.restaurantId === res
           <Clock variant="Bulk" size={"20px"} />
           <Text fontSize={"12px"}>54-64 mins</Text>
         </HStack>
-        <HStack>
+        {user.data?.user && <HStack>
           <IconButton
             bg={"#12B76A"}
             size={"xs"}
@@ -136,7 +129,7 @@ const disableButton =  user.data?.user?.like.some(obj=> obj.restaurantId === res
             aria-label="like"
             icon={<Dislike size={"16px"} color="white" />}
           />
-        </HStack>
+        </HStack>}
       </Flex>
     </Box>
   );

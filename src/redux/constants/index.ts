@@ -1,1 +1,1 @@
-export const WEBSITE_URL = 'https://quickchop.ojoisaac.me/api'
+export const WEBSITE_URL = process.env.NEXT_PUBLIC_BASE_URL
