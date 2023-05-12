@@ -5,7 +5,7 @@ export type CartState = {
 };
 
 const initialState = {
-  data: localStorage.getItem("qcCart")
+  data: typeof window !== "undefined" && localStorage.getItem("qcCart")
     ? JSON.parse(localStorage.getItem("qcCart") || "")
     : [],
 } as CartState;
