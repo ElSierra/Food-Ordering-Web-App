@@ -24,6 +24,7 @@ import { ArrowDown2, BagHappy, WalletMoney } from "iconsax-react";
 import { MobileSearchBar } from "./mobileSearchBar";
 import SearchModal from "../search";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function NavBar() {
   // const {
@@ -40,81 +41,84 @@ export default function NavBar() {
   const bg = useColorModeValue("#FFFFFF", "#000000");
   const { getUserData } = useUserState();
 
+  const pathname = usePathname();
   const user = getUserData();
+  console.log('header', pathname.split('/').length)
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-   <> 
-   <SearchModal isOpen={isOpen} onClose={onClose}/>
-   <Box
-      as="nav"
-      position="fixed"
-      display={"block"}
-      w="100%"
-      padding={0}
-      zIndex={"10"}
-      bg={bg}
-      borderBottom={`1px solid ${borderBottom}`}
-    >
-      <Flex
-        pl={{ base: "20px", sm: "20px", md: "20px", lg: "80px" }}
-        pr={{ base: "20px", sm: "20px", md: "20px", lg: "80px" }}
-        pt={{ base: "10px", sm: "20px", md: "15px" }}
-        pb={{ base: "10px", sm: "20px", md: "15px" }}
-        borderBottom={{base :``, lg: "1px solid ${borderBottom}"}}
-        height={"fit-content"}
-
-        // borderEndStartRadius={'20px'}
-
-        // borderEndEndRadius={'20px'}
+    <>
+      <SearchModal isOpen={isOpen} onClose={onClose} />
+      <Box
+        as="nav"
+        position="fixed"
+        display={"block"}
+        w="100%"
+        padding={0}
+        zIndex={"10"}
+        bg={bg}
+        borderBottom={`1px solid ${borderBottom}`}
       >
-        <Link href={'/shop'}>
-        <Box>
-          <Image width={80} src={Logo} alt="Quick-chop" />
-        </Box></Link>
+        <Flex
+          pl={{ base: "20px", sm: "20px", md: "20px", lg: "80px" }}
+          pr={{ base: "20px", sm: "20px", md: "20px", lg: "80px" }}
+          pt={{ base: "10px", sm: "20px", md: "15px" }}
+          pb={{ base: "10px", sm: "20px", md: "15px" }}
+          borderBottom={{ base: ``, lg: "1px solid ${borderBottom}" }}
+          height={"fit-content"}
 
-        <>
-          <Spacer />
-          <SearchBar onOpen = {onOpen} />
-        </>
-        <Spacer />
-        {user.data?.user && (
-          <Center>
-            <HStack  mr={{'base': "10px", "lg": "20px"}}>
-              <WalletMoney variant="Bulk" size={"20px"} />
-              <Text fontWeight={"bolder"}>
-                ₦ {user.data?.user.balance || 0}{" "}
-              </Text>
-              <ArrowDown2 size="15px" style={{marginLeft: '2px'}} />
-            </HStack>
-            <Box>
-              <HStack>
-                {" "}
-                <BagHappy variant="Bulk" size={"20px"} />{" "}
-                
-                <ArrowDown2 size="15px" style={{marginLeft: '2px'}} />
-              </HStack>
-            </Box>
-          </Center>
-        )}
-        <Center
-          ml={{
-            base: "30px",
-            sm: "30px",
-            md: "50px",
-            lg: "50px",
-            xl: "50px",
-            xxl: "50px",
-            vxl: "60px",
-          }}
+          // borderEndStartRadius={'20px'}
+
+          // borderEndEndRadius={'20px'}
         >
-          <AuthMenu
-          // userData={userData}
-          // isGetLoading={isGetLoading}
-          //isLoggedIn={false}
-          />
-        </Center>
-      </Flex>
-      <MobileSearchBar  onOpen = {onOpen}/>
-    </Box></>
+          <Link href={"/shop"}>
+            <Box>
+              <Image width={80} src={Logo} alt="Quick-chop" />
+            </Box>
+          </Link>
+
+          <>
+            <Spacer />
+            {pathname.split('/').length===4 && pathname.split('/')[2] === 'restaurant'? null : <SearchBar onOpen={onOpen} />}
+          </>
+          <Spacer />
+          {user.data?.user && (
+            <Center>
+              <HStack mr={{ base: "10px", lg: "20px" }}>
+                <WalletMoney variant="Bulk" size={"20px"} />
+                <Text fontWeight={"bolder"}>
+                  ₦ {user.data?.user.balance || 0}{" "}
+                </Text>
+                <ArrowDown2 size="15px" style={{ marginLeft: "2px" }} />
+              </HStack>
+              <Box>
+                <HStack>
+                  {" "}
+                  <BagHappy variant="Bulk" size={"20px"} />{" "}
+                  <ArrowDown2 size="15px" style={{ marginLeft: "2px" }} />
+                </HStack>
+              </Box>
+            </Center>
+          )}
+          <Center
+            ml={{
+              base: "30px",
+              sm: "30px",
+              md: "50px",
+              lg: "50px",
+              xl: "50px",
+              xxl: "50px",
+              vxl: "60px",
+            }}
+          >
+            <AuthMenu
+            // userData={userData}
+            // isGetLoading={isGetLoading}
+            //isLoggedIn={false}
+            />
+          </Center>
+        </Flex>
+        {pathname.split('/').length===4 && pathname.split('/')[2] === 'restaurant'? null : <MobileSearchBar onOpen={onOpen} />}
+      </Box>
+    </>
   );
 }

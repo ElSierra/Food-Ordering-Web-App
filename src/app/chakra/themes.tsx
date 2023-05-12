@@ -20,7 +20,13 @@ const theme = extendTheme({
     gridBase: "0px",
     gridSm: "500px",
     gridLg: "650px",
-    gridXl: "700px"
+    gridXl: "700px",
+    baseCard: "0px",
+    smCard: "580px",
+    mdCard: "1100px",
+    lgCard: "1280px",
+    xlCard: "1480px",
+
 
   },
   

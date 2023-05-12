@@ -1,6 +1,7 @@
 import { WEBSITE_URL } from "@/redux/constants";
 import { Restaurant } from "@prisma/client";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { RestaurantResponse } from "../../../../interface/prisma";
 export const restaurantApi = createApi({
   reducerPath: "restaurantApi",
   baseQuery: fetchBaseQuery({
@@ -10,7 +11,7 @@ export const restaurantApi = createApi({
   tagTypes: ["Restaurant", "rating"],
   endpoints: (builder) => ({
     getRestaurants: builder.query<
-      { restaurant: Restaurant[] },
+      { restaurant: RestaurantResponse[] },
       { name?: string; start?: number; take?: number }
     >({
       query: (payload) => {
@@ -30,6 +31,16 @@ export const restaurantApi = createApi({
       },
       providesTags: ["Restaurant"],
     }),
+    getSingleRestaurant: builder.query<
+      { restaurant: RestaurantResponse[] },
+      { id: string }
+    >({
+      query: (payload) => {
+        return `/restaurants/${payload.id}`;
+      },
+      providesTags: ["Restaurant"],
+    }),
   }),
 });
-export const { useGetRestaurantsQuery} = restaurantApi;
+export const { useGetRestaurantsQuery, useGetSingleRestaurantQuery } =
+  restaurantApi;

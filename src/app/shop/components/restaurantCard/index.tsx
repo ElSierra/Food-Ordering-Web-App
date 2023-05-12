@@ -2,6 +2,7 @@
 
 import {
   Box,
+  Button,
   Flex,
   HStack,
   IconButton,
@@ -10,7 +11,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Restaurant } from "@prisma/client";
-import { Clock, Dislike, Like, Like1, Star } from "iconsax-react";
+import { ArrowSquareRight, Clock, Dislike, Like, Like1, Star } from "iconsax-react";
 import Image from "next/image";
 
 import "./loadImage.css";
@@ -21,6 +22,7 @@ import { useState } from "react";
 import { useRateRestaurantQuery } from "@/redux/features/api/restaurantUserPutSlice";
 import { useUserState } from "@/app/hooks/setGetUser";
 import { UserState } from "@/redux/features/authSlice";
+import { RestaurantResponse } from "../../../../../interface/prisma";
 
 export default function RestaurantCard({
   restaurant,
@@ -41,6 +43,7 @@ export default function RestaurantCard({
     { restaurant: restaurant.id, like },
     { skip: skip }
   );
+
 
 
 const disableButton =  user.data?.user?.like?.some(obj=> obj.restaurantId === restaurant.id) || user.data?.user?.dislike?.some(obj=> obj.restaurantId === restaurant.id)
@@ -102,7 +105,7 @@ const disableButton =  user.data?.user?.like?.some(obj=> obj.restaurantId === re
               onClick={() => {}}
             />
             <Text fontSize={"12px"}>
-              {rateRestaurant.data?.msg?.toString() || restaurant.rating}%
+              {rateRestaurant.data?.msg?.toString() || restaurant.rating} ({restaurant.ratingAmount})%
             </Text>
           </HStack>
         </HStack>
@@ -110,6 +113,8 @@ const disableButton =  user.data?.user?.like?.some(obj=> obj.restaurantId === re
           <Clock variant="Bulk" size={"20px"} />
           <Text fontSize={"12px"}>54-64 mins</Text>
         </HStack>
+
+        <Flex>
         {user.data?.user && <HStack>
           <IconButton
             bg={"#12B76A"}
@@ -126,10 +131,15 @@ const disableButton =  user.data?.user?.like?.some(obj=> obj.restaurantId === re
             size={"xs"}
             onClick={handleDisLike}
             _hover={{ bg: "#82251E" }}
-            aria-label="like"
+            aria-label="dislike"
             icon={<Dislike size={"16px"} color="white" />}
           />
         </HStack>}
+        <Spacer/>
+      <Link  href={`shop/restaurant/${restaurant.id}`}><ArrowSquareRight color={"#004C29"} size={'30px'} variant="Bulk"/></Link>
+        
+        </Flex>
+
       </Flex>
     </Box>
   );

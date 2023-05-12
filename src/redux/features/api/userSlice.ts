@@ -6,7 +6,7 @@ export const userSlice = createApi({
     baseUrl: `${WEBSITE_URL}/auth`,
   }),
 
-  tagTypes: ["Post"],
+  tagTypes: ["User"],
   endpoints: (builder) => ({
     loginUser: builder.mutation({
       query: (payload) => ({
@@ -17,7 +17,7 @@ export const userSlice = createApi({
           "Content-type": "application/json; charset=UTF-8",
         },
       }),
-      invalidatesTags: ["Post"],
+      invalidatesTags: ["User"],
     }),
     verifyOTP: builder.mutation({
       query: (payload) => ({
@@ -29,7 +29,7 @@ export const userSlice = createApi({
           "Content-type": "application/json; charset=UTF-8",
         },
       }),
-      invalidatesTags: ["Post"],
+      invalidatesTags: ["User"],
     }),
     signUP: builder.mutation({
       query: (payload) => ({
@@ -40,7 +40,7 @@ export const userSlice = createApi({
           "Content-type": "application/json; charset=UTF-8",
         },
       }),
-      invalidatesTags: ["Post"],
+      invalidatesTags: ["User"],
     }),
   }),
 });
