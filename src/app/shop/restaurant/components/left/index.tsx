@@ -22,7 +22,7 @@ export const LeftContainer = ({
 }: {
   restaurant: RestaurantResponse;
 }) => {
-  const bgColorTime = useColorModeValue("#E0E0E0", "#202020");
+  const bgColorTime = useColorModeValue("#E0E0E08C", "#20202069");
   const [tabIndex, setTabIndex] = useState(0);
   console.log("🚀 ~ file: index.tsx:17 ~ LeftContainer ~ tabIndex:", tabIndex);
   const handleChange = (e: any) => {
@@ -54,6 +54,7 @@ export const LeftContainer = ({
             position={"absolute"}
             left={3}
             bottom={3}
+            backdropFilter={"blur(10px)"}
             zIndex={9}
           >
             <HStack>
