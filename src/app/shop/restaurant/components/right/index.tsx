@@ -1,4 +1,4 @@
-import { Box, Center, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Center, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 import Lottie from "lottie-react";
 import React from "react";
 import animationData from "../assets/cart.json";
@@ -12,14 +12,15 @@ export default function RightSide() {
   const cart = useAppSelector(
     (state: { cartDataReducer: CartState }) => state.cartDataReducer
   );
+
   return (
     <>
    
-    <Center flexDirection={"column"}>
+    <Flex flexDirection={"column"}>
       {cart.data?.length > 0 ? (
       
         cart.data?.map((cart, idx) => {
-          return <CartCard key={idx} cart= {cart}/>;
+          return <CartCard key={idx} cart= {cart} id={idx}/>;
         })
       ) : (
         <>
@@ -30,6 +31,6 @@ export default function RightSide() {
           </Text>
         </>
       )}
-    </Center></>
+    </Flex></>
   );
 }

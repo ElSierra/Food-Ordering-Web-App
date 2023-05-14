@@ -15,30 +15,23 @@ export default function Home({
   const bg = useColorModeValue("#FFFFFF54", "black");
   const lineBg = useColorModeValue("#30303023", "#303030");
   return (
-    <Flex
-      mt={{ base: "80px", lg: "80px" }}
-     
-      as={"main"}
-      h="100vh"
-
-    >
+    <Flex mt={{ base: "80px", lg: "80px" }} as={"main"} h="100vh">
       <Box
         h="100vh"
         overflow={"auto"}
-
         style={{ scrollbarWidth: "none" }}
-            css={{
-              "&::-webkit-scrollbar": {
-                width: "0px",
-              },
-              "&::-webkit-scrollbar-track": {
-                width: "0px",
-              },
-              "&::-webkit-scrollbar-thumb": {
-                background: "",
-                borderRadius: "",
-              },
-            }}
+        css={{
+          "&::-webkit-scrollbar": {
+            width: "0px",
+          },
+          "&::-webkit-scrollbar-track": {
+            width: "0px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "",
+            borderRadius: "",
+          },
+        }}
         w={{ base: "100%", lg: "70%" }}
         pl="20px"
         pt="20px"
@@ -48,20 +41,33 @@ export default function Home({
         <LeftContainer restaurant={restaurant} />
       </Box>
       <Box>
-   
-      <Box
-        overflowY={"scroll"}
-        position={"fixed"}
-        overflowX={'hidden'}
-        top={20}
-        bottom={0}
-        right={"6%"}
-        w={{ base: "0%", lg: "25%" }}
-        flexDirection={"column"}
-        display={{ base: "none", lg: "flex" }}
-      >
-        <RightSide />
-      </Box></Box>
+        <Box
+          overflowY={"scroll"}
+          position={"fixed"}
+          overflowX={"hidden"}
+          top={20}
+          bottom={0}
+          right={"6%"}
+          w={{ base: "0%", lg: "25%" }}
+          flexDirection={"column"}
+          display={{ base: "none", lg: "flex" }}
+          style={{ scrollbarWidth: "none" }}
+          css={{
+            "&::-webkit-scrollbar": {
+              width: "0px",
+            },
+            "&::-webkit-scrollbar-track": {
+              width: "0px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "",
+              borderRadius: "",
+            },
+          }}
+        >
+          <RightSide />
+        </Box>
+      </Box>
     </Flex>
   );
 }
