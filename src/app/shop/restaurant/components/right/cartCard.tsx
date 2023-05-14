@@ -3,12 +3,13 @@ import { useAppDispatch } from "@/redux/hooks";
 import {
   Box,
   Flex,
+  HStack,
   IconButton,
   Spacer,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Trash } from "iconsax-react";
+import { MoneyTick, Size, Trash } from "iconsax-react";
 import React from "react";
 
 export default function CartCard({
@@ -32,7 +33,7 @@ export default function CartCard({
       border={`1px dashed ${lineBg}`}
     >
       <Flex>
-        <Text>{cart.name}</Text>
+        <Text fontSize={'13px'} fontWeight={'bolder'}>{cart.name}</Text>
 
         <Spacer />
         <IconButton
@@ -55,8 +56,8 @@ export default function CartCard({
         />
       </Flex>
       <Box>
-      <Text>Pack x{cart.amount}</Text>
-      <Text>Price</Text></Box>
+     <HStack><Size variant="Bulk" color="green" size={'16px'} /> <Text> x{cart.amount}</Text></HStack>
+      <HStack><MoneyTick variant="Bulk" color="green" size={'16px'}/><Text fontSize={'14px'}>₦{cart.price}</Text></HStack></Box>
     </Box>
   );
 }

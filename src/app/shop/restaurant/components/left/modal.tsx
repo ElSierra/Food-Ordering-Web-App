@@ -43,7 +43,7 @@ export default function OrderFoodModal({
         maxW={{ base: "90%", xl: "40%" }}
       >
         <ModalBody>
-          <ModalBodyCard menu={menu} />
+          <ModalBodyCard menu={menu} onClose = {onClose}/>
         </ModalBody>
         
       </ModalContent>

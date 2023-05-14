@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 import IncDecButton from "./incDecButton";
 import { useState } from "react";
-export default function ModalBodyCard({ menu }: { menu: Menu }) {
+export default function ModalBodyCard({ menu, onClose }: { menu: Menu, onClose: any}) {
   const [orderAmount, setOrderAmount] = useState(1);
   const dispatch = useAppDispatch();
   return (
@@ -70,9 +70,11 @@ export default function ModalBodyCard({ menu }: { menu: Menu }) {
                 name: menu.name,
                 price: menu.price,
                 photo: menu.photo,
+                amount: orderAmount,
               });
               localStorage.setItem("qcCart", JSON.stringify(cartList));
               dispatch(updateState(cartList))
+              onClose()
             } else {
               const cartList = [];
               cartList.push({
@@ -83,6 +85,7 @@ export default function ModalBodyCard({ menu }: { menu: Menu }) {
               });
               localStorage.setItem("qcCart", JSON.stringify(cartList));
               dispatch(updateState(cartList))
+              onClose()
             }
           }}
           w="80%"

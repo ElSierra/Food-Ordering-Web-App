@@ -46,6 +46,8 @@ export default function Home({
           position={"fixed"}
           overflowX={"hidden"}
           top={20}
+          mb='30px'
+          pb='200px'
           bottom={0}
           right={"6%"}
           w={{ base: "0%", lg: "25%" }}

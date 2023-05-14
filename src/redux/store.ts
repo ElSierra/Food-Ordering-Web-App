@@ -9,6 +9,7 @@ import userDataReducer from "./features/authSlice";
 import { restaurantApi } from "./features/api/restaurantGetSlice";
 import { restaurantUserApi } from "./features/api/restaurantUserPutSlice";
 
+
 export const store = configureStore({
   reducer: {
     authReducer,
@@ -32,3 +33,4 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
