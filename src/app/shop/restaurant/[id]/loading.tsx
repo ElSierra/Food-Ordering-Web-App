@@ -47,7 +47,7 @@ export default function Loading() {
         flexDirection={"column"}
         display={{ base: "none", lg: "flex" }}
       >
-        <RightSide />
+      
       </Box>
     </Flex>
   );
