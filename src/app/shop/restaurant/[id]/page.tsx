@@ -4,6 +4,9 @@ import { prisma } from "../../../../../lib/prisma";
 import Home from "../home";
 
 
+//TODO: Create Order Page with UI, I downloaded
+//TODO: Verify Email Socket
+//TODO: Cart/Ordering on Phone
 
 export default async function Restaurant({params}: {params:{id: string}}) {
 
