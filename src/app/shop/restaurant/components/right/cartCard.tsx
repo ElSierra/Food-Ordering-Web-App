@@ -1,3 +1,4 @@
+import { useOrderFoodMutation } from "@/redux/features/api/restaurantUserPutSlice";
 import { updateState } from "@/redux/features/cartSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import {
@@ -16,12 +17,13 @@ export default function CartCard({
   cart,
   id,
 }: {
-  cart: { name: string; price: string; photo: string; amount: string };
+  cart: { name: string; price: string; photo: string; quantity: string };
   id: number;
 }) {
   const cardBg = useColorModeValue("#FFFFFF54", "black");
   const lineBg = useColorModeValue("#30303023", "#303030");
   const dispatch = useAppDispatch();
+
  
   return (
     <Box
@@ -56,7 +58,7 @@ export default function CartCard({
         />
       </Flex>
       <Box>
-     <HStack><Size variant="Bulk" color="green" size={'16px'} /> <Text> x{cart.amount}</Text></HStack>
+     <HStack><Size variant="Bulk" color="green" size={'16px'} /> <Text> x{cart.quantity}</Text></HStack>
       <HStack><MoneyTick variant="Bulk" color="green" size={'16px'}/><Text fontSize={'14px'}>₦{cart.price}</Text></HStack></Box>
     </Box>
   );

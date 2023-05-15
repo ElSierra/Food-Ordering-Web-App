@@ -8,8 +8,12 @@ import { RestaurantResponse } from "../../../../../interface/prisma";
 
 export default function Home({
   restaurant,
+  params,
 }: {
   restaurant: RestaurantResponse;
+  params: {
+    id: string
+  }
 }) {
   const rightBorder = useColorModeValue("#30303023", "#303030");
   const bg = useColorModeValue("#FFFFFF54", "black");
@@ -67,7 +71,7 @@ export default function Home({
             },
           }}
         >
-          <RightSide />
+          <RightSide params ={params} />
         </Box>
       </Box>
     </Flex>

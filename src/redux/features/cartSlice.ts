@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 
 export type CartState = {
-  data: {name: string, price: string, photo: string,amount: string }[];
+  data: {name: string, price: string, photo: string,quantity: string, id: string,  }[];
 };
 
 const initialState = {

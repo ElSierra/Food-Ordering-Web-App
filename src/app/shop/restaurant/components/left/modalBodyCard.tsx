@@ -67,10 +67,11 @@ export default function ModalBodyCard({ menu, onClose }: { menu: Menu, onClose: 
                 ...JSON.parse(localStorage.getItem("qcCart") || "")
               );
               cartList.push({
+                id: menu.id,
                 name: menu.name,
                 price: menu.price,
                 photo: menu.photo,
-                amount: orderAmount,
+                quantity: orderAmount,
               });
               localStorage.setItem("qcCart", JSON.stringify(cartList));
               dispatch(updateState(cartList))
@@ -78,10 +79,11 @@ export default function ModalBodyCard({ menu, onClose }: { menu: Menu, onClose: 
             } else {
               const cartList = [];
               cartList.push({
+                id: menu.id,
                 name: menu.name,
                 price: menu.price,
                 photo: menu.photo,
-                amount: orderAmount,
+                quantity: orderAmount,
               });
               localStorage.setItem("qcCart", JSON.stringify(cartList));
               dispatch(updateState(cartList))

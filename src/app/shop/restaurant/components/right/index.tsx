@@ -10,18 +10,30 @@ import {
 import Lottie from "lottie-react";
 import React, { useEffect, useState } from "react";
 import animationData from "../assets/cart.json";
+import animationData2 from "../assets/pay-success.json";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   CartState,
-  cartDataReducer,
+
   reset,
-  updateState,
+
 } from "@/redux/features/cartSlice";
 import CartCard from "./cartCard";
 import { Wallet, Wallet1, WalletMoney } from "iconsax-react";
 import { useUserState } from "@/app/hooks/setGetUser";
+import {
+  useOrderFoodMutation,
+  usePayFoodMutation,
+} from "@/redux/features/api/restaurantUserPutSlice";
+import Cookies from "js-cookie";
+import {
+  OrderState,
+  resetOrder,
 
-export default function RightSide() {
+} from "@/redux/features/orderSlice";
+import OrderCard from "./orderCard";
+
+export default function RightSide({ params }: { params: { id: string } }) {
   const lineBg = useColorModeValue("#30303023", "#303030");
   const { getUserData } = useUserState();
 
@@ -31,12 +43,17 @@ export default function RightSide() {
   const cart = useAppSelector(
     (state: { cartDataReducer: CartState }) => state.cartDataReducer
   );
+  const orderState = useAppSelector(
+    (state: { orderReducer: OrderState }) => state.orderReducer
+  );
 
+  const [orderFood, orderResponse] = useOrderFoodMutation();
+  const [payFood, payFoodResponse] = usePayFoodMutation();
   useEffect(() => {
     let nTotal = 0;
     if (cart.data) {
       for (let i = 0; i < cart.data.length; i++) {
-        nTotal += Number(cart.data[i]?.amount) * Number(cart?.data[i]?.price);
+        nTotal += Number(cart.data[i]?.quantity) * Number(cart?.data[i]?.price);
 
         //setSubTotal(Number(cart?.data[i]?.price))
       }
@@ -44,61 +61,132 @@ export default function RightSide() {
     setSubTotal(nTotal);
   }, [cart.data]);
 
+  const handleOrder = () => {
+    orderFood({
+      menuList: cart?.data,
+      restaurantId: params.id,
+    });
+  };
+
+  const handlePay = () => {
+    payFood({
+      orderId: orderState.orderId,
+    });
+    
+  };
+
+
   return (
     <>
       <Flex flexDirection={"column"}>
-      {cart?.data?.length > 0 &&<Text>Your Orders</Text>}
-        <Box mt="10px" height={"0.5px"} bg={lineBg} mb="24px"></Box>
-        {cart?.data.length > 0 ? (
-          cart.data?.map((cart, idx) => {
-            return <CartCard key={idx} cart={cart} id={idx} />;
-          })
-        ) : (
+        {orderState?.status !== "PAID" ? (
           <>
-            <Lottie style={{ height: "300px" }} animationData={animationData} />
+            {orderState?.status !== "PENDING" ? (
+              <>
+                {cart?.data?.length > 0 && <Text>Your Orders</Text>}
+                <Box mt="10px" height={"0.5px"} bg={lineBg} mb="24px"></Box>
+                {cart?.data.length > 0 ? (
+                  cart.data?.map((cart, idx) => {
+                    return <CartCard key={idx} cart={cart} id={idx} />;
+                  })
+                ) : (
+                  <>
+                    <Lottie
+                      style={{ height: "300px" }}
+                      animationData={animationData}
+                    />
 
-            <Text textAlign={"center"}>
-              Your cart is Empty <br /> Add something to your cart
-            </Text>
-          </>
-        )}
-        {cart?.data?.length > 0 && (
-          <>
-            <Box mt="10px" height={"0.5px"} bg={lineBg}></Box>
-            <Flex mt="20px">
-              <Text fontSize={"13px"}>Wallet Balance:</Text>
-              <Spacer />
-              <Center>
-                <WalletMoney color="green" variant="Bulk" size={"16px"} />
-                <Text fontSize={"13px"}>(₦{user.data?.user?.balance})</Text>
-              </Center>
-            </Flex>
-            <Box mt="10px" height={"0.5px"} bg={lineBg}></Box>
-            <Flex mt="20px">
-              <Text fontSize={"13px"}>Sub Total ({cart?.data?.length}):</Text>
-              <Spacer />
-              <Center>
-                <WalletMoney color="green" variant="Bulk" size={"16px"} />
-                <Text fontSize={"13px"}>(₦{subTotal})</Text>
-              </Center>
-            </Flex>
-            {user.data?.user?.balance !== undefined &&
-            user.data?.user?.balance > subTotal ? (
-              <Button mt="30px">Place Order</Button>
+                    <Text textAlign={"center"}>
+                      Your cart is Empty <br /> Add something to your cart
+                    </Text>
+                  </>
+                )}
+              </>
             ) : (
-              <Button mt="30px">Deposit into your account</Button>
+              <OrderCard cart={cart.data} />
             )}
 
-            <Button
-              mt="30px"
-              onClick={() => {
-                localStorage.removeItem("qcCart");
-                dispatch(reset());
-              }}
-            >
-              Clear Cart
-            </Button>
+            {cart?.data?.length > 0 && (
+              <>
+                <Box mt="10px" height={"0.5px"} bg={lineBg}></Box>
+                <Flex mt="20px">
+                  <Text fontSize={"13px"}>Wallet Balance:</Text>
+                  <Spacer />
+                  <Center>
+                    <WalletMoney color="green" variant="Bulk" size={"16px"} />
+                    <Text fontSize={"13px"}>(₦{user.data?.user?.balance})</Text>
+                  </Center>
+                </Flex>
+                <Box mt="10px" height={"0.5px"} bg={lineBg}></Box>
+                <Flex mt="20px">
+                  <Text fontSize={"13px"}>
+                    Sub Total ({cart?.data?.length}):
+                  </Text>
+                  <Spacer />
+                  <Center>
+                    <WalletMoney color="green" variant="Bulk" size={"16px"} />
+                    <Text fontSize={"13px"}>(₦{subTotal})</Text>
+                  </Center>
+                </Flex>
+
+                {orderState?.status !== "PENDING" ? (
+                  <>
+                    {user.data?.user?.balance !== undefined &&
+                    user.data?.user?.balance > subTotal ? (
+                      <Button
+                        isLoading={orderResponse.isLoading}
+                        mt="30px"
+                        onClick={handleOrder}
+                      >
+                        Place Order
+                      </Button>
+                    ) : (
+                      <Button mt="30px">Deposit into your account</Button>
+                    )}
+                  </>
+                ) : (
+                  <Button
+                    mt="30px"
+                    isLoading={payFoodResponse.isLoading}
+                    onClick={handlePay}
+                  >
+                    Pay
+                  </Button>
+                )}
+                {orderState?.status !== "PENDING" ? (
+                  <Button
+                    mt="30px"
+                    onClick={() => {
+                      localStorage.removeItem("qcCart");
+                      dispatch(reset());
+                    }}
+                  >
+                    Clear Cart
+                  </Button>
+                ) : (
+                  <Button
+                    mt="30px"
+                    onClick={() => {
+                      Cookies.remove("qcOrder");
+                      dispatch(resetOrder());
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                )}
+              </>
+            )}
           </>
+        ) : (
+          <Box>
+            <Lottie
+              style={{ height: "300px" }}
+              animationData={animationData2}
+            />
+
+            <Text textAlign={"center"}>Payment Complete</Text>
+           <Center mt='20px'> <Button>Track your Food</Button></Center>
+          </Box>
         )}
       </Flex>
     </>

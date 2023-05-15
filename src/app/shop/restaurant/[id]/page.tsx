@@ -35,6 +35,6 @@ export default async function Restaurant({params}: {params:{id: string}}) {
     paddingLeft: "5%",
     paddingRight: "5%",
   }}>
-    <Home restaurant = {restaurant}/>
+    <Home restaurant = {restaurant} params={params}/>
   </main>
 }
