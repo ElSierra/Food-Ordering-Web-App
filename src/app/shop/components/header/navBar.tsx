@@ -12,6 +12,10 @@ import {
   HStack,
   IconButton,
   useDisclosure,
+  Menu,
+  MenuButton,
+  MenuList,
+  Button,
 } from "@chakra-ui/react";
 
 import Logo from "../assets/logo-v2.svg";
@@ -25,6 +29,9 @@ import { MobileSearchBar } from "./mobileSearchBar";
 import SearchModal from "../search";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import RightSide from "../../restaurant/components/right";
+import { useRef } from "react";
+import { CartDrawer } from "./cartDrawer";
 
 export default function NavBar() {
   // const {
@@ -43,10 +50,26 @@ export default function NavBar() {
 
   const pathname = usePathname();
   const user = getUserData();
-  console.log('header', pathname.split('/').length)
+  console.log("header", pathname.split("/").length);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenDrawer,
+    onOpen: onOpenDrawer,
+    onClose: onCloseDrawer,
+  } = useDisclosure();
+  const btnRef = useRef(null);
+
+  function formatCompactNumber(number: number) {
+    const formatter = Intl.NumberFormat("en", { notation: "compact" });
+    return formatter.format(number);
+  }
   return (
     <>
+      <CartDrawer
+        isOpen={isOpenDrawer}
+        onClose={onCloseDrawer}
+        btnRef={btnRef}
+      />
       <SearchModal isOpen={isOpen} onClose={onClose} />
       <Box
         as="nav"
@@ -78,7 +101,10 @@ export default function NavBar() {
 
           <>
             <Spacer />
-            {pathname.split('/').length===4 && pathname.split('/')[2] === 'restaurant'? null : <SearchBar onOpen={onOpen} />}
+            {pathname.split("/").length === 4 &&
+            pathname.split("/")[2] === "restaurant" ? null : (
+              <SearchBar onOpen={onOpen} />
+            )}
           </>
           <Spacer />
           {user.data?.user && (
@@ -86,17 +112,16 @@ export default function NavBar() {
               <HStack mr={{ base: "10px", lg: "20px" }}>
                 <WalletMoney variant="Bulk" size={"20px"} />
                 <Text fontWeight={"bolder"}>
-                  ₦ {user.data?.user.balance || 0}{" "}
+                  ₦ {formatCompactNumber(user.data?.user?.balance || 0)}{" "}
                 </Text>
                 <ArrowDown2 size="15px" style={{ marginLeft: "2px" }} />
               </HStack>
-              <Box>
+              <Button ref={btnRef} colorScheme="teal" onClick={onOpenDrawer}>
                 <HStack>
-                  {" "}
                   <BagHappy variant="Bulk" size={"20px"} />{" "}
                   <ArrowDown2 size="15px" style={{ marginLeft: "2px" }} />
                 </HStack>
-              </Box>
+              </Button>
             </Center>
           )}
           <Center
@@ -117,7 +142,10 @@ export default function NavBar() {
             />
           </Center>
         </Flex>
-        {pathname.split('/').length===4 && pathname.split('/')[2] === 'restaurant'? null : <MobileSearchBar onOpen={onOpen} />}
+        {pathname.split("/").length === 2 &&
+        pathname.split("/")[1] === "shop" ? (
+          <MobileSearchBar onOpen={onOpen} />
+        ) : null}{" "}
       </Box>
     </>
   );

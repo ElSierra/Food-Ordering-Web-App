@@ -114,7 +114,7 @@ export const LeftContainer = ({
         <Spacer />
         <Text color={minText}>Min Order : ₦1,000</Text>
       </Flex>
-      <Flex flexWrap={"wrap"} justify={"space-between"}>
+      <Flex flexWrap={"wrap"} justify={"space-between"} paddingBottom={'80px'}>
       {restaurant?.menu?.map((menu: any) => {
           return <FoodCard key={menu.id} menu={menu}/>;
         })}

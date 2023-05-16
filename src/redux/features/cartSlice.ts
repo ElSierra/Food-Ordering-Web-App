@@ -2,7 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 
 export type CartState = {
-  data: {name: string, price: string, photo: string,quantity: string, id: string,  }[];
+  data: {
+    name: string;
+    price: string;
+    photo: string;
+    quantity: string;
+    id: string;
+    restaurantId: string;
+  }[];
 };
 
 const initialState = {
@@ -22,15 +29,6 @@ export const cartDataReducer = createSlice({
     updateState: (state, action: PayloadAction<any>) => {
       console.log("payload", action.payload);
       state.data = action.payload;
-    },
-  },
-
-  extraReducers: {
-    [HYDRATE]: (state, action) => {
-      return {
-        ...state,
-        ...action.payload.cartData,
-      };
     },
   },
 });

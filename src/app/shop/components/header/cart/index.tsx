@@ -9,8 +9,8 @@ import {
 } from "@chakra-ui/react";
 import Lottie from "lottie-react";
 import React, { useEffect, useState } from "react";
-import animationData from "../assets/cart.json";
-import animationData2 from "../assets/pay-success.json";
+import animationData from "./assets/cart.json";
+import animationData2 from "./assets/pay-success.json";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { CartState, reset } from "@/redux/features/cartSlice";
 import CartCard from "./cartCard";
@@ -72,8 +72,7 @@ export default function RightSide() {
         {orderState?.status !== "PAID" ? (
           <>
             {orderState?.status !== "PENDING" ? (
-              <Box paddingBottom={'60px'} >
-                {cart?.data?.length > 0 && <Text>Your Orders</Text>}
+              <Box paddingBottom={"60px"}>
                 <Box mt="10px" height={"0.5px"} bg={lineBg} mb="24px"></Box>
                 {cart?.data.length > 0 ? (
                   cart.data?.map((cart, idx) => {
@@ -99,15 +98,6 @@ export default function RightSide() {
             {cart?.data?.length > 0 && (
               <Flex
                 flexDirection={"column"}
-                position={"fixed"}
-                bottom={0}
-                overflow="hidden"
-                pr="5%"
-                pl="5%"
-                ml={"-5%"}
-                w="inherit"
-                backdropFilter={"blur(10px)"}
-                bg={"rgb(30, 30, 30, 0.5)"}
                 paddingBottom={{ base: "90px", lg: "10px" }}
               >
                 <Box mt="10px" height={"0.5px"} bg={lineBg}></Box>

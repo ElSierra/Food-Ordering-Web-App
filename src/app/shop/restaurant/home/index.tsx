@@ -15,6 +15,7 @@ export default function Home({
     id: string
   }
 }) {
+  
   const rightBorder = useColorModeValue("#30303023", "#303030");
   const bg = useColorModeValue("#FFFFFF54", "black");
   const lineBg = useColorModeValue("#30303023", "#303030");
@@ -71,7 +72,7 @@ export default function Home({
             },
           }}
         >
-          <RightSide params ={params} />
+          <RightSide />
         </Box>
       </Box>
     </Flex>

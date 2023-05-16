@@ -1,3 +1,5 @@
+import { Menu, Orders, Restaurant } from "@prisma/client";
+
 export type UserResponse = {
   id: string;
   email: string;
@@ -42,3 +44,34 @@ export type RestaurantResponse = {
   locationId: string | null;
   restaurantAdminId: string | null;
 };
+
+export type Order = {
+  id: string;
+  restaurantId: string;
+  status: string;
+  total: number;
+  rider: [];
+  foodOrder: {
+    menu: {
+      id: string;
+      name: string;
+      price: string;
+      photo: string;
+    };
+  }[];
+}[];
+
+export interface IOrder extends Orders {
+  rider: {
+    location: Location | null;
+    name: string;
+    phone: string;
+    photo: string | null;
+  } | null;
+  restaurant: Restaurant;
+  foodOrder: {
+    menu: Menu;
+    quantity: number;
+  }[];
+}
+[];

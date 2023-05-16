@@ -37,7 +37,7 @@ export default function OrderFoodModal({
       </ModalOverlay>
       <ModalContent
         bg={bg}
-        h={"70%"}
+        h={{ base: "60%", xl: "70%" }}
         paddingTop={"12px"}
         borderRadius={"3xl"}
         maxW={{ base: "90%", xl: "40%" }}

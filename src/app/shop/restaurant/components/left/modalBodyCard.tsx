@@ -3,15 +3,26 @@ import { Menu } from "@prisma/client";
 import Image from "next/image";
 import { updateState, reset } from "@/redux/features/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { usePathname } from "next/navigation";
 
 import IncDecButton from "./incDecButton";
 import { useState } from "react";
-export default function ModalBodyCard({ menu, onClose }: { menu: Menu, onClose: any}) {
+export default function ModalBodyCard({
+  menu,
+  onClose,
+}: {
+  menu: Menu;
+  onClose: any;
+}) {
   const [orderAmount, setOrderAmount] = useState(1);
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
+  console.log(
+    "🚀 ~ file: modalBodyCard.tsx:14 ~ ModalBodyCard ~ pathname:",
+    pathname.split("/")[3]
+  );
+
   return (
-
-
     <Box w="100%">
       <Box height={"300px"} position={"relative"} w="100%">
         <Box
@@ -72,10 +83,11 @@ export default function ModalBodyCard({ menu, onClose }: { menu: Menu, onClose: 
                 price: menu.price,
                 photo: menu.photo,
                 quantity: orderAmount,
+                restaurantId: pathname.split("/")[3],
               });
               localStorage.setItem("qcCart", JSON.stringify(cartList));
-              dispatch(updateState(cartList))
-              onClose()
+              dispatch(updateState(cartList));
+              onClose();
             } else {
               const cartList = [];
               cartList.push({
@@ -84,13 +96,14 @@ export default function ModalBodyCard({ menu, onClose }: { menu: Menu, onClose: 
                 price: menu.price,
                 photo: menu.photo,
                 quantity: orderAmount,
+                restaurantId: pathname.split("/")[3],
               });
               localStorage.setItem("qcCart", JSON.stringify(cartList));
-              dispatch(updateState(cartList))
-              onClose()
+              dispatch(updateState(cartList));
+              onClose();
             }
           }}
-          w="80%"
+          w="50%"
           _hover={{ bgColor: "#065B33" }}
           color={"white"}
           bgColor={"#12B76A"}

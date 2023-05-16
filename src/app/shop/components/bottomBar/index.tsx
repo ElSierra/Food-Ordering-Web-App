@@ -1,11 +1,21 @@
 "use client";
 
-import { Center, Flex, IconButton, Text, useColorModeValue } from "@chakra-ui/react";
-import { BagHappy, Home, Profile, Setting2 } from "iconsax-react";
+import {
+  Center,
+  Flex,
+  IconButton,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { BagHappy, Home, Profile, Receipt21, Setting2 } from "iconsax-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 export default function BottomBar() {
   const bg = useColorModeValue("#FFFFFF", "#000000");
+  const pathname = usePathname();
+  console.log("bottomBar", pathname);
   return (
     <Flex
       w="100%"
@@ -14,27 +24,54 @@ export default function BottomBar() {
       display={{ base: "flex", lg: "none" }}
       bgColor={bg}
       align={"center"}
-      justify={'space-evenly'}
-      flexDirection={'row'}
-      
-      pt='10px'
-      pb='10px'
+      justify={"space-evenly"}
+      flexDirection={"row"}
+      pt="10px"
+      pb="10px"
     >
+      <Link href={"/shop"}>
+        <Center>
+          <IconButton
+            bg="transparent"
+            aria-label={"Home"}
+            icon={<Home variant={pathname === "/shop" ? "Bulk" : "Outline"} />}
+          />
+        </Center>
+      </Link>
+      <Link href={"/shop/cart"}>
+        <Center>
+          <IconButton
+            bg="transparent"
+            aria-label={"Cart"}
+            icon={
+              <BagHappy
+                variant={pathname === "/shop/cart" ? "Bulk" : "Outline"}
+              />
+            }
+          />
+        </Center>
+      </Link>
+
+      <Link href={"/shop/orders"}>
+        <Center>
+          <IconButton
+            bg="transparent"
+            aria-label={"Orders"}
+            icon={
+              <Receipt21
+                variant={pathname === "/shop/orders" ? "Bulk" : "Outline"}
+              />
+            }
+          />
+        </Center>
+      </Link>
       <Center>
-        <IconButton bg='transparent' aria-label={"Home"} icon={<Home />} />
+        <IconButton
+          bg="transparent"
+          aria-label={"Profile"}
+          icon={<Profile />}
+        />
       </Center>
-      <Center>
-        <IconButton bg='transparent' aria-label={"Home"} icon={<BagHappy />} />
-      </Center>
-      <Center>
-        <IconButton bg='transparent' aria-label={"Home"} icon={<Profile />} />
-      </Center>
-      <Center>
-        <IconButton bg='transparent' aria-label={"Home"} icon={<Setting2 />} />
-      </Center>
-      
-     
-     
     </Flex>
   );
 }
