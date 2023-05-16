@@ -19,16 +19,14 @@ export default function ExploreBox({
 }: props) {
   return (
     <Flex
+      className="animate__animated animate__fadeInDown"
       minW="130px"
       minH="130px"
       onClick={onClick}
       bg={bg}
-
-     
       alignItems={"center"}
       justifyContent={"center"}
       borderRadius={"2xl"}
-     
       cursor={"pointer"}
       _hover={{ border: `2px solid ${borderColor}` }}
     >

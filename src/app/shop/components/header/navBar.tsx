@@ -116,7 +116,7 @@ export default function NavBar() {
                 </Text>
                 <ArrowDown2 size="15px" style={{ marginLeft: "2px" }} />
               </HStack>
-              <Button ref={btnRef} colorScheme="teal" onClick={onOpenDrawer}>
+              <Button ref={btnRef} display={{base: "none", lg: "inline-block"}} colorScheme="teal" onClick={onOpenDrawer}>
                 <HStack>
                   <BagHappy variant="Bulk" size={"20px"} />{" "}
                   <ArrowDown2 size="15px" style={{ marginLeft: "2px" }} />

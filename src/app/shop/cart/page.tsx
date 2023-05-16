@@ -7,7 +7,7 @@ export default function Cart() {
   const { getUserData, setUserDataQuery } = useUserState(false);
   const user = getUserData();
   return (
-    <Box pl={"5%"} pr="5%" paddingTop={"100px"} paddingBottom={"300px"}>
+    <Box className="animate__animated animate__fadeInUp" pl={"5%"} pr="5%" paddingTop={"100px"} paddingBottom={"300px"}>
       <RightSide />
     </Box>
   );

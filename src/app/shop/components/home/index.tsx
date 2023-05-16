@@ -174,6 +174,7 @@ export const HomeContainer = ({
             justify={"space-between"}
             overflowX="scroll"
             w="100%"
+            className="animate__animated animate__fadeInDown"
             overflowY={"hidden"}
             scrollSnapType={"x mandatory"}
             style={{ scrollbarWidth: "none" }}
