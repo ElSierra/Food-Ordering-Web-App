@@ -1,28 +1,22 @@
 import {
   Box,
-  
   Modal,
   ModalBody,
- 
   ModalContent,
-  
   ModalOverlay,
   Flex,
   useColorModeValue,
   Input,
   InputGroup,
   InputLeftElement,
-
   Skeleton,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
-import {CloseSquare, SearchNormal } from "iconsax-react";
+import { CloseSquare, SearchNormal } from "iconsax-react";
 import { RestaurantsCardSearch } from "./searchCard";
 import { useGetRestaurantsQuery } from "@/redux/features/api/restaurantGetSlice";
 import { useDebounce } from "./searchdeBounce";
-
-
 
 export default function SearchModal({
   isOpen,
@@ -45,8 +39,6 @@ export default function SearchModal({
     { skip: skip }
   );
 
- 
-
   useEffect(() => {
     console.log(restaurants.data, "for search");
     if (debounceValue.length <= 0) {
@@ -54,7 +46,6 @@ export default function SearchModal({
     } else {
       setSkip(false);
     }
-   
   }, [debounceValue, restaurants]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,18 +111,19 @@ export default function SearchModal({
                 console.log("er knkk");
                 return (
                   <RestaurantsCardSearch
+                    onClose={onClose}
                     key={restaurants.id}
                     restaurant={restaurants}
                   />
                 );
               })
             ) : restaurants.isFetching || restaurants.isLoading ? (
-              <Flex flexDirection={'column'}>
-                <Skeleton  mb='10px' height="60px" />
-                <Skeleton  mb='10px' height="60px" />
-                <Skeleton  mb='10px' height="60px" />
-                <Skeleton  mb='10px' height="60px" />
-                <Skeleton  mb='10px' height="60px" />
+              <Flex flexDirection={"column"}>
+                <Skeleton mb="10px" height="60px" />
+                <Skeleton mb="10px" height="60px" />
+                <Skeleton mb="10px" height="60px" />
+                <Skeleton mb="10px" height="60px" />
+                <Skeleton mb="10px" height="60px" />
               </Flex>
             ) : null}
           </Box>

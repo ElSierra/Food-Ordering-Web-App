@@ -6,18 +6,23 @@ import { Router } from "next/router";
 
 export const RestaurantsCardSearch = ({
   restaurant,
+  onClose,
 }: {
   restaurant: Restaurant;
+  onClose: any;
 }) => {
   const router = useRouter();
 
-  Router.events.on("routeChangeStart", (url)=>{
-    console.log('route change start')
-  })
+  Router.events.on("routeChangeStart", (url) => {
+    console.log("route change start");
+  });
   const bg = useColorModeValue("#FFFFFF", "rgb(30, 30, 30, 0.5)");
   return (
     <Button
-      onClick={() => router.push(`/restaurant/${restaurant.id}`)}
+      onClick={() => {
+        router.push(`shop/restaurant/${restaurant.id}`);
+        onClose();
+      }}
       alignContent={"left"}
       mb="10px"
       justifyContent={"left"}
@@ -27,7 +32,7 @@ export const RestaurantsCardSearch = ({
       bg={bg}
       borderRadius={"base"}
     >
-      <HStack>
+      <HStack w='100%'>
         {" "}
         <Box height={"40px"} position={"relative"}>
           <Box top={0} left={0} width={"40px"} height={"40px"}>
@@ -38,11 +43,14 @@ export const RestaurantsCardSearch = ({
               blurDataURL={restaurant.loadingImage}
               style={{ objectFit: "cover", borderRadius: "10px" }}
               fill
+              sizes="(min-width: 60em) 24vw,
+              (min-width: 28em) 45vw,
+              100vw"
             />
           </Box>
         </Box>
-        <Box pl={"30px"}>
-          <Text textAlign={"left"}>{restaurant.name}</Text>
+        <Box pl={"30px"} w='100%'>
+          <Text w='80%' whiteSpace={'nowrap'} overflow={'hidden'} textOverflow={'ellipsis'} textAlign={"left"}>{restaurant.name}</Text>
           <Text textAlign={"left"}></Text>
         </Box>
       </HStack>
