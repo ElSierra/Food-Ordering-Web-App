@@ -115,12 +115,12 @@ export const OrdersCard = ({ orderData }: { orderData: IOrder }) => {
       </Flex>
       <Box mt="10px" height={"0.5px"} bg={lineBg}></Box>
       <Flex flexDirection={"column"}>
-        {orderData?.foodOrder.map((foodOrder) => {
+        {orderData?.foodOrder.map((foodOrder, idx) => {
           return (
             <ItemCard
               foodOrder={foodOrder}
               orderData={orderData}
-              key={foodOrder.menu.id}
+              key={idx}
             />
           );
         })}

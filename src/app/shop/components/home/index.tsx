@@ -191,7 +191,7 @@ export const HomeContainer = ({
               },
             }}
           >
-            <Banner
+            {/* <Banner
               color={"black"}
               bgImage="./bg2.svg"
               heading={"Order anywhere"}
@@ -205,8 +205,8 @@ export const HomeContainer = ({
                   />
                 </Center>
               }
-            />
-            <Banner
+            /> */}
+            {/* <Banner
               bgImage="./bg1.svg"
               heading={"Welcome to QuickChop"}
               subHeading={
@@ -221,7 +221,7 @@ export const HomeContainer = ({
                   />
                 </Center>
               }
-            />
+            /> */}
           </Flex>
         </Box>
         <div
