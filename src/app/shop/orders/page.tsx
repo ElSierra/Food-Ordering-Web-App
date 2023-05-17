@@ -58,6 +58,7 @@ export default async function Restaurant({
   };
 
   const orderData: any = await orders();
+  console.log("🚀 ~ file: page.tsx:61 ~ orderData:", orderData)
 
   return (
     <main
