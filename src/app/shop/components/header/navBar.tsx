@@ -32,7 +32,15 @@ import { usePathname } from "next/navigation";
 import RightSide from "../../restaurant/components/right";
 import { useRef } from "react";
 import { CartDrawer } from "./cartDrawer";
+import dynamic from "next/dynamic";
 
+const DynamicCartDrawer = dynamic(
+  () =>
+    import("./cartDrawer").then((Drawer) => {
+      return Drawer.CartDrawer;
+    }),
+  {}
+);
 export default function NavBar() {
   // const {
   //   data: userData,
@@ -65,7 +73,7 @@ export default function NavBar() {
   }
   return (
     <>
-      <CartDrawer
+      <DynamicCartDrawer
         isOpen={isOpenDrawer}
         onClose={onCloseDrawer}
         btnRef={btnRef}
@@ -116,7 +124,12 @@ export default function NavBar() {
                 </Text>
                 <ArrowDown2 size="15px" style={{ marginLeft: "2px" }} />
               </HStack>
-              <Button ref={btnRef} display={{base: "none", lg: "inline-block"}} colorScheme="teal" onClick={onOpenDrawer}>
+              <Button
+                ref={btnRef}
+                display={{ base: "none", lg: "inline-block" }}
+                colorScheme="teal"
+                onClick={onOpenDrawer}
+              >
                 <HStack>
                   <BagHappy variant="Bulk" size={"20px"} />{" "}
                   <ArrowDown2 size="15px" style={{ marginLeft: "2px" }} />
