@@ -7,11 +7,15 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import ProfilePhotoModal from "./modal/profilePhotoModal";
+
 import { useEffect, useState } from "react";
 import { UserState } from "@/redux/features/authSlice";
 import axios from "axios";
 import Cookies from "js-cookie";
+import dynamic from "next/dynamic";
+const ProfilePhotoModal = dynamic(() => import("./modal/profilePhotoModal"), {
+  ssr: false,
+});
 export default function RightSide({ user }: { user: UserState }) {
   const token = Cookies.get("qs_token");
   const { isOpen, onOpen, onClose } = useDisclosure();
