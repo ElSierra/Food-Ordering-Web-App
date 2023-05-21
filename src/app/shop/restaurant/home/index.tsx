@@ -5,7 +5,7 @@ import React from "react";
 import { LeftContainer } from "../components/left";
 import RightSide from "../components/right";
 import { RestaurantResponse } from "../../../../../interface/prisma";
-import socket from "../../../../../lib/socket";
+
 
 export default function Home({
   restaurant,
