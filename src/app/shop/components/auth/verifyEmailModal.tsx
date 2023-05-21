@@ -1,11 +1,9 @@
 import {
   Box,
-  
   Modal,
   ModalBody,
-
+  Text,
   ModalContent,
-
   ModalOverlay,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -16,13 +14,20 @@ import { UnVerifiedUserPage } from "./unVerifiedUser";
 export default function UnVerifiedModalContainer({
   isOpen,
   onClose,
+  verify,
 }: {
   isOpen: boolean;
   onClose: any;
+  verify: boolean;
 }) {
   const bg = useColorModeValue("#FFFFFF", "#000000");
   return (
-    <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} blockScrollOnMount>
+    <Modal
+      closeOnOverlayClick={false}
+      isOpen={isOpen}
+      onClose={onClose}
+      blockScrollOnMount
+    >
       <ModalOverlay>
         <Box
           minW={"100vw"}
@@ -38,7 +43,8 @@ export default function UnVerifiedModalContainer({
         maxW={{ base: "90%", xl: "40%" }}
       >
         <ModalBody>
-          <UnVerifiedUserPage onClose = {onClose}/>
+          <Text>verify={verify?'true': "false"}</Text>
+          <UnVerifiedUserPage onClose={onClose} />
         </ModalBody>
       </ModalContent>
     </Modal>

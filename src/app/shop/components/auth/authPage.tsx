@@ -95,6 +95,7 @@ export const AuthPage = ({ isOpen, onClose }: props) => {
           onClose();
 
           dispatch(updateState({ data: e }));
+          Cookies.set("_qsId", e.id);
           toast({
             title: "Success",
             description: ``,

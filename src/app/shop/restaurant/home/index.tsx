@@ -5,6 +5,7 @@ import React from "react";
 import { LeftContainer } from "../components/left";
 import RightSide from "../components/right";
 import { RestaurantResponse } from "../../../../../interface/prisma";
+import socket from "../../../../../lib/socket";
 
 export default function Home({
   restaurant,
@@ -15,7 +16,7 @@ export default function Home({
     id: string
   }
 }) {
-  
+
   const rightBorder = useColorModeValue("#30303023", "#303030");
   const bg = useColorModeValue("#FFFFFF54", "black");
   const lineBg = useColorModeValue("#30303023", "#303030");

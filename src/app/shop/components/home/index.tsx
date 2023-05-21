@@ -34,23 +34,28 @@ import { useGetRestaurantsQuery } from "@/redux/features/api/restaurantGetSlice"
 import "./grid.css";
 import Link from "next/link";
 import { ArrowSquareUp, ArrowUp } from "iconsax-react";
-import NProgress from 'nprogress';
-import { usePathname, useSearchParams } from 'next/navigation';
+import NProgress from "nprogress";
+import { usePathname, useSearchParams } from "next/navigation";
+import socket from "../../../../../lib/socket";
+
 
 export const HomeContainer = ({
   restaurant: restaurantFromServer,
   isLoadingPage,
+  userId
 }: {
   restaurant: Restaurant[];
   isLoadingPage: Boolean;
+  userId: string
 }) => {
   console.log("here");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [skip, setSkip] = useState(true);
   const pathname = usePathname();
+  const [verify, setVerify] = useState(false)
   const searchParams = useSearchParams();
- 
+
   const [restaurantData, setRestaurantData] = useState(restaurantFromServer);
   const { getUserData, setUserDataQuery } = useUserState(skip);
   const user: UserState = getUserData();
@@ -60,7 +65,8 @@ export const HomeContainer = ({
     take: 20,
   });
 
-  console.log('NEXT_PUBLIC_BASE_URL', process.env.NEXT_PUBLIC_BASE_URL)
+
+  console.log("NEXT_PUBLIC_BASE_URL", process.env.NEXT_PUBLIC_BASE_URL);
   console.log(restaurants);
 
   const verified = user?.data?.user?.verified.toString() as string;
@@ -88,10 +94,38 @@ export const HomeContainer = ({
     }
   };
 
-  const [hasMore, setHasMore] = useState(true);
+  socket.emit("verifyCheck", userId, (e: any) => {
+    console.log("🚀 ~ file: index.tsx:101 ~ socket.emit ~ e:", e)
+ 
+  	});
   
+  socket.on("verifyCheck", (e)=>{
+    console.log('the value of email is', e)
+    setVerify(e)
+    setUserDataQuery()
+
+  });
+  // });
+
+  // if (typeof window !== "undefined") {
+  // 
+  // }
+  const [hasMore, setHasMore] = useState(true);
+
   useEffect(() => {
+
+    if(verify){
+      onClose()
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("quickChopVerified")
+      }
+    }
     if (typeof window !== "undefined") {
+      socket.connect();
+    
+      socket.on("verifyCheck", (id) => {
+        console.log("response is", id);
+      });
       if (Cookies.get("qs_token")) {
         console.log(Cookies.get("qs_token"));
         setSkip(false);
@@ -102,11 +136,10 @@ export const HomeContainer = ({
       } else {
         setSkip(true);
       }
-    
-   }
+    }
 
-  const url = pathname
-  console.log('🌍',url)
+    const url = pathname;
+    console.log("🌍", url);
     console.log(
       "🚀 ~ file: index.tsx:100 ~ useEffect ~ restaurants.data?.restaurant.length:",
       restaurants.data?.restaurant.length
@@ -115,12 +148,11 @@ export const HomeContainer = ({
     if (restaurants.data?.restaurant.length === 0) {
       setHasMore(false);
     }
-  }, [onOpen, restaurants.data?.restaurant.length, pathname]);
+  }, [onOpen, restaurants.data?.restaurant.length, pathname, verify, onClose]);
 
   return (
     <>
-    
-      <UnVerifiedModalContainer isOpen={isOpen} onClose={onClose} />
+      <UnVerifiedModalContainer verify={verify} isOpen={isOpen} onClose={onClose} />
 
       <Flex
         mt={{ base: "180px", lg: "120px" }}
@@ -249,10 +281,14 @@ export const HomeContainer = ({
               </Box>
             }
             endMessage={
-              <Box position={"absolute"}  left={"50%"} right={"50%"} bottom={10}>
+              <Box position={"absolute"} left={"50%"} right={"50%"} bottom={10}>
                 {" "}
-                <Link href={"shop/#top"} style={{marginTop: '30px'}}>
-                <IconButton aria-label="up" icon={<ArrowSquareUp size="32"/>}/></Link>
+                <Link href={"shop/#top"} style={{ marginTop: "30px" }}>
+                  <IconButton
+                    aria-label="up"
+                    icon={<ArrowSquareUp size="32" />}
+                  />
+                </Link>
               </Box>
             }
           >
@@ -260,7 +296,7 @@ export const HomeContainer = ({
               ? restaurantData.map((restaurant) => {
                   return (
                     <RestaurantCard
-                     user = {user}
+                      user={user}
                       restaurant={restaurant}
                       key={restaurant.id}
                     />
@@ -269,8 +305,6 @@ export const HomeContainer = ({
               : null}
           </InfiniteScroll>
         ) : null}
-
-        
       </Flex>
     </>
   );

@@ -1,7 +1,7 @@
 import { Restaurant } from "@prisma/client";
 import { prisma } from "../../../lib/prisma";
 import { HomeContainer } from "./components/home";
-
+import { cookies } from "next/headers";
 
 export default async function Home() {
   const fetchRestaurants = async () => {
@@ -16,6 +16,8 @@ export default async function Home() {
       return [];
     }
   };
+  const nextCookies = cookies(); // Get cookies object
+  const userId = nextCookies.get("_qsId");
 
   const restaurants: Restaurant[] = await fetchRestaurants();
 
@@ -29,7 +31,7 @@ export default async function Home() {
         paddingRight: "5%",
       }}
     >
-      <HomeContainer restaurant={restaurants} isLoadingPage={false} />
+      <HomeContainer restaurant={restaurants} isLoadingPage={false} userId={userId?.value || ''} />
     </main>
   );
 }
