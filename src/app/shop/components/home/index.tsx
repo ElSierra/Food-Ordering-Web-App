@@ -36,24 +36,22 @@ import Link from "next/link";
 import { ArrowSquareUp, ArrowUp } from "iconsax-react";
 import NProgress from "nprogress";
 import { usePathname, useSearchParams } from "next/navigation";
-import socket from "../../../../../lib/socket";
-
 
 export const HomeContainer = ({
   restaurant: restaurantFromServer,
   isLoadingPage,
-  userId
+  userId,
 }: {
   restaurant: Restaurant[];
   isLoadingPage: Boolean;
-  userId: string
+  userId: string;
 }) => {
   console.log("here");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [skip, setSkip] = useState(true);
   const pathname = usePathname();
-  const [verify, setVerify] = useState(false)
+  const [verify, setVerify] = useState(false);
   const searchParams = useSearchParams();
 
   const [restaurantData, setRestaurantData] = useState(restaurantFromServer);
@@ -64,7 +62,6 @@ export const HomeContainer = ({
     start: restaurantData?.length,
     take: 20,
   });
-
 
   console.log("NEXT_PUBLIC_BASE_URL", process.env.NEXT_PUBLIC_BASE_URL);
   console.log(restaurants);
@@ -94,38 +91,16 @@ export const HomeContainer = ({
     }
   };
 
-  socket.emit("verifyCheck", userId, (e: any) => {
-    console.log("🚀 ~ file: index.tsx:101 ~ socket.emit ~ e:", e)
- 
-  	});
-  
-  socket.on("verifyCheck", (e)=>{
-    console.log('the value of email is', e)
-    setVerify(e)
-    setUserDataQuery()
-
-  });
-  // });
-
-  // if (typeof window !== "undefined") {
-  // 
-  // }
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-
-    if(verify){
-      onClose()
+    if (verify) {
+      onClose();
       if (typeof window !== "undefined") {
-        localStorage.removeItem("quickChopVerified")
+        localStorage.removeItem("quickChopVerified");
       }
     }
     if (typeof window !== "undefined") {
-      socket.connect();
-    
-      socket.on("verifyCheck", (id) => {
-        console.log("response is", id);
-      });
       if (Cookies.get("qs_token")) {
         console.log(Cookies.get("qs_token"));
         setSkip(false);
@@ -152,7 +127,11 @@ export const HomeContainer = ({
 
   return (
     <>
-      <UnVerifiedModalContainer verify={verify} isOpen={isOpen} onClose={onClose} />
+      <UnVerifiedModalContainer
+        verify={verify}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
 
       <Flex
         mt={{ base: "180px", lg: "120px" }}
