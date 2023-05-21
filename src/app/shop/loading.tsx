@@ -14,7 +14,7 @@ export default async function Home() {
         paddingRight: "5%",
       }}
     >
-      <HomeContainer restaurant={[]} isLoadingPage={true} />
+      <HomeContainer restaurant={[]} isLoadingPage={true} userId="" />
     </main>
   );
 }
