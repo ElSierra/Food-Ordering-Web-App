@@ -49,7 +49,7 @@ export default function NavBar() {
     (state: { cartDataReducer: CartState }) => state.cartDataReducer
   );
 
-  
+
 
   const borderBottom = useColorModeValue("#F7F6F6", "#303030");
   const bg = useColorModeValue("#FFFFFF", "#000000");
@@ -126,7 +126,7 @@ export default function NavBar() {
                 onClick={onOpenDrawer}
               >
                 <HStack>
-                  <BagHappy variant="Bulk" size={"20px"} /> <Text>{cart.data?.length}</Text>
+                  {/* <BagHappy variant="Bulk" size={"20px"} /> <Text>{cart.data?.length}</Text> */}
                   <ArrowDown2 size="15px" style={{ marginLeft: "2px" }} />
                 </HStack>
               </Button>
