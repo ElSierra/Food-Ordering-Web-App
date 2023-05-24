@@ -8,6 +8,7 @@ import {
   useColorModeValue,
   Button,
   Center,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { ImageCrop } from "./imageCrop";
@@ -20,20 +21,33 @@ export default function ProfilePhotoModal({
   onCrop,
   onClosedCrop,
   onUpload,
+  picData,
+  
 }: {
   isOpen: boolean;
   onClose: any;
   onCrop: any;
   onClosedCrop: any;
   onUpload: () => void;
+  picData: string | null,
+ 
 }) {
-  const [file, setFile] = useState<any>();
-  const [isLoading, setIsLoading] = useState(Boolean);
+
+  const toast = useToast();
+
+  const [fileExists, setFileExists] = useState<File>()
   function onBeforeFileLoad(elem: any) {
     if (elem.target.files[0].size > 2000000) {
-      alert("File is too big!");
+      toast({
+        title: "Maximum file size of 2MB",
+        description: `File Size Limit`,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
       elem.target.value = "";
     }
+    setFileExists(elem.target.files[0])
   }
 
   const bg = useColorModeValue("#FFFFFF", "#000000");
@@ -62,10 +76,11 @@ export default function ProfilePhotoModal({
             />
           </Center>
           <Button
+          isDisabled={picData? false: true}
             mt="20px"
             w="100%"
             onClick={(e) => {
-              onUpload()
+              onUpload();
             }}
           >
             Upload

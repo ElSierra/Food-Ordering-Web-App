@@ -4,12 +4,17 @@ import {
   Avatar,
   Box,
   Button,
+  Flex,
   HStack,
+  IconButton,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { Location, ProfileCircle, Wallet1 } from "iconsax-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { mobileList } from "./List";
+import { MobileLeft } from "./LeftItems";
 
 export default function LeftSide() {
   const rightBorder = useColorModeValue("#30303023", "#303030");
@@ -40,14 +45,14 @@ export default function LeftSide() {
         },
       }}
       w={{ base: "20%", lg: "15%" }}
-      pl="20px"
+      pl={{ base: "0px", lg: "20px" }}
       pt="20px"
       pr="20px"
       borderRight={{ base: "", lg: `1px solid ${rightBorder}` }}
     >
       <Box>
-        <HStack>
-          <Avatar size={"xs"} />
+        <HStack display={{ base: "none", lg: "flex" }}>
+          <ProfileCircle />
           <Text fontSize={"sm"}>My account</Text>
         </HStack>
         <Box ml="22px" mt="20px">
@@ -55,6 +60,7 @@ export default function LeftSide() {
             {" "}
             <Button
               w="100%"
+              display={{ base: "none", lg: "flex" }}
               size={"sm"}
               bg={pathname !== "/shop/profile" ? "none" : buttonBg}
               justifyContent={"left"}
@@ -67,8 +73,10 @@ export default function LeftSide() {
               My Profile
             </Button>
           </Link>
+
           <Link href={"/shop/profile/location"}>
             <Button
+              display={{ base: "none", lg: "flex" }}
               bg={pathname !== "/shop/profile/location" ? "none" : buttonBg}
               color={
                 pathname !== "/shop/profile/location"
@@ -86,6 +94,7 @@ export default function LeftSide() {
 
           <Link href={"/shop/profile/wallet"}>
             <Button
+              display={{ base: "none", lg: "flex" }}
               bg={pathname !== "/shop/profile/wallet" ? "none" : buttonBg}
               mt="10px"
               w="100%"
@@ -100,6 +109,10 @@ export default function LeftSide() {
               My Wallet
             </Button>
           </Link>
+          <Flex flexDirection={'column'} gap={2}>
+          {mobileList.map((list, idx) => {
+            return <MobileLeft key={idx} icon={list.icon} route={list.route} />;
+          })}</Flex>
         </Box>
       </Box>
     </Box>
