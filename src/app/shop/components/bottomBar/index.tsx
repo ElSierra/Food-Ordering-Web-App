@@ -1,5 +1,7 @@
 "use client";
 
+import { CartState } from "@/redux/features/cartSlice";
+import { useAppSelector } from "@/redux/hooks";
 import {
   Center,
   Flex,
@@ -13,6 +15,9 @@ import { usePathname } from "next/navigation";
 import React from "react";
 
 export default function BottomBar() {
+  const cart = useAppSelector(
+    (state: { cartDataReducer: CartState }) => state.cartDataReducer
+  );
   const bg = useColorModeValue("#FFFFFF", "#000000");
   const pathname = usePathname();
   console.log("bottomBar", pathname);
@@ -40,6 +45,7 @@ export default function BottomBar() {
       </Link>
       <Link href={"/shop/cart"}>
         <Center>
+          <Text position={"absolute"}>{cart.data?.length}</Text>
           <IconButton
             bg="transparent"
             aria-label={"Cart"}
@@ -66,13 +72,18 @@ export default function BottomBar() {
         </Center>
       </Link>
       <Link href={"/shop/profile"}>
-      <Center>
-        <IconButton
-          bg="transparent"
-          aria-label={"Profile"}
-          icon={<Profile  variant={pathname === "/shop/profile" ? "Bulk" : "Outline"} />}
-        />
-      </Center></Link>
+        <Center>
+          <IconButton
+            bg="transparent"
+            aria-label={"Profile"}
+            icon={
+              <Profile
+                variant={pathname === "/shop/profile" ? "Bulk" : "Outline"}
+              />
+            }
+          />
+        </Center>
+      </Link>
     </Flex>
   );
 }

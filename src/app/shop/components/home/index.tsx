@@ -204,7 +204,7 @@ export const HomeContainer = ({
           >
             <Banner
               color={"black"}
-              bgImage="./bg2.svg"
+              bgColor="rgb(255, 218, 31)"
               heading={"Order anywhere"}
               subHeading={"No location we no fit reach."}
               asset={
@@ -218,7 +218,7 @@ export const HomeContainer = ({
               }
             />
             <Banner
-              bgImage="./bg1.svg"
+              bgColor="black"
               heading={"Welcome to QuickChop"}
               subHeading={
                 "No cooking, no hassle. Just tasty food delivered to your door."

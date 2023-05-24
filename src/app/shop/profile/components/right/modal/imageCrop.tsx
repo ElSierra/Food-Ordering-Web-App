@@ -15,6 +15,7 @@ export const ImageCrop = ({
       <AvatarUpload
         width={300}
         height={300}
+        exportAsSquare
         
         label="Upload Profile Picture"
         onCrop={onCrop}

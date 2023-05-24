@@ -33,6 +33,8 @@ import RightSide from "../../restaurant/components/right";
 import { useRef } from "react";
 import { CartDrawer } from "./cartDrawer";
 import dynamic from "next/dynamic";
+import { useAppSelector } from "@/redux/hooks";
+import { CartState } from "@/redux/features/cartSlice";
 
 const DynamicCartDrawer = dynamic(
   () =>
@@ -41,16 +43,13 @@ const DynamicCartDrawer = dynamic(
     }),
   {}
 );
+
 export default function NavBar() {
-  // const {
-  //   data: userData,
-  //   isLoading: isGetLoading,
-  //   isSuccess: isGetSuccess,
-  //   isError: isGetError,
-  //   error: getError,
-  // } = useGetUserQuery({ refetchOnMountOrArgChange: false });
-  // console.log("🚀 ~ file: navBar.tsx:39 ~ NavBar ~ userData:", {userData, isGetError,isGetLoading,getError});
-  // console.log("🚀 ~ file: navBar.tsx:39 ~ NavBar ~ getError:", getError);
+  const cart = useAppSelector(
+    (state: { cartDataReducer: CartState }) => state.cartDataReducer
+  );
+
+  
 
   const borderBottom = useColorModeValue("#F7F6F6", "#303030");
   const bg = useColorModeValue("#FFFFFF", "#000000");
@@ -96,10 +95,6 @@ export default function NavBar() {
           pb={{ base: "10px", sm: "20px", md: "15px" }}
           borderBottom={{ base: ``, lg: "1px solid ${borderBottom}" }}
           height={"fit-content"}
-
-          // borderEndStartRadius={'20px'}
-
-          // borderEndEndRadius={'20px'}
         >
           <Link href={"/shop"}>
             <Box>
@@ -131,7 +126,7 @@ export default function NavBar() {
                 onClick={onOpenDrawer}
               >
                 <HStack>
-                  <BagHappy variant="Bulk" size={"20px"} />{" "}
+                  <BagHappy variant="Bulk" size={"20px"} /> <Text>{cart.data?.length}</Text>
                   <ArrowDown2 size="15px" style={{ marginLeft: "2px" }} />
                 </HStack>
               </Button>
@@ -148,11 +143,7 @@ export default function NavBar() {
               vxl: "60px",
             }}
           >
-            <AuthMenu
-            // userData={userData}
-            // isGetLoading={isGetLoading}
-            //isLoggedIn={false}
-            />
+            <AuthMenu />
           </Center>
         </Flex>
         {pathname.split("/").length === 2 &&

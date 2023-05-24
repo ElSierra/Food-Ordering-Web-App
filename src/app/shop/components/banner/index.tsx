@@ -4,13 +4,13 @@ export const Banner = ({
   heading,
   subHeading,
   asset,
-  bgImage,
+  bgColor,
   color,
 }: {
   heading: string;
   subHeading: string;
   asset: any;
-  bgImage: string;
+  bgColor: string;
   color?: string;
 }) => {
   return (
@@ -21,8 +21,8 @@ export const Banner = ({
       w={{ base: "100%", md: "48%" }}
       minW={{ base: "100%", md: "48%" }}
       h="200px"
-      bgColor ={''}
-      bgImage={bgImage}
+      bgColor ={bgColor}
+      
       backgroundRepeat={"no-repeat"}
       backgroundPosition={"fit"}
       backgroundSize={"cover"}

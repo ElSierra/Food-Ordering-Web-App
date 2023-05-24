@@ -1,4 +1,4 @@
-"use client";
+
 
 import { Text, Button, HStack, Center, useColorModeValue } from "@chakra-ui/react";
 import { SearchNormal } from "iconsax-react";

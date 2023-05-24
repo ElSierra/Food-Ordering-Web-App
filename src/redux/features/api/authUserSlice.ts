@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 export const userAuthApi = createApi({
   reducerPath: "userAuthSlice",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${WEBSITE_URL}/auth`,
+    baseUrl: `${WEBSITE_URL}`,
     prepareHeaders: (headers) => {
       // Get the access token from the state
       const token = Cookies.get('qs_token')
@@ -20,11 +20,11 @@ export const userAuthApi = createApi({
   tagTypes: ["User"],
   endpoints: (builder) => ({
     getUser: builder.query({
-      query: () => "/user",
+      query: () => "/auth/user",
       providesTags: ["User"],
     }),
     logOut: builder.query({
-      query: () => "/logout",
+      query: () => "/auth/logout",
       providesTags: ["User"],
     }),
     photoPost: builder.mutation({
@@ -38,6 +38,17 @@ export const userAuthApi = createApi({
       }),
       invalidatesTags: ["User"],
     }),
+    updateInfo: builder.mutation({
+      query: (payload) => ({
+        url: `/auth/update-info`,
+        method: "PUT",
+        body: payload,
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
-export const { useGetUserQuery , useLogOutQuery, usePhotoPostMutation} = userAuthApi;
+export const { useGetUserQuery , useLogOutQuery, usePhotoPostMutation, useUpdateInfoMutation} = userAuthApi;
