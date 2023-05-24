@@ -3,7 +3,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  
   Avatar,
   useDisclosure,
   Spinner,
@@ -18,7 +17,9 @@ import { reset, UserState } from "@/redux/features/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useState } from "react";
 import { useLogOutQuery } from "@/redux/features/api/authUserSlice";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
+import Link from "next/link";
+
 
 export const AuthMenu = () => {
   const user = useAppSelector(
@@ -38,14 +39,13 @@ export const AuthMenu = () => {
     },
     { skip: skip }
   );
-  if (data.isSuccess){
-    Cookies.remove('qs_token')
+  if (data.isSuccess) {
+    Cookies.remove("qs_token");
     localStorage.removeItem("quickChopUserEmail");
-  };
+  }
 
-  
   const logOut = () => {
-    console.log('here44')
+    console.log("here44");
     setSkip(false);
     dispatch(reset());
 
@@ -58,43 +58,38 @@ export const AuthMenu = () => {
         <Box>
           <Avatar
             src={user?.data?.user?.photo || undefined}
-            size={{base: "sm", md: "md"}}
+            size={{ base: "sm", md: "md" }}
             name={user?.data?.user?.name || ""}
             display={user.loading ? "none" : "block"}
             pointerEvents={"none"}
             placeholder="./default.avif"
           />
-          <Center mr='20px' >
+          <Center mr="20px">
             <Spinner
               display={user.loading ? "block" : "none"}
               zIndex={1}
               position={"absolute"}
-            
               thickness="4px"
-              size={{base: "sm", md: "md"}}
+              size={{ base: "sm", md: "md" }}
             />
           </Center>
         </Box>
       </MenuButton>
-      <MenuList >
+      <MenuList>
         <MenuItem
           // padding={"20px"}
           // borderTop={0}
           // borderBottom={0}
           // _active={{ backgroundColor: "transparent" }}
           // _hover={{ backgroundColor: "transparent" }}
-          icon={user.data ? <Logout size={'16px'}/> : <LoginCurve />}
+          icon={user.data ? <Logout size={"16px"} /> : <LoginCurve />}
           onClick={user.data ? logOut : onOpen}
         >
           {user.data ? "Logout" : "Login"}
         </MenuItem>
-        {user.data ? <MenuItem
-      
-          icon= {<Profile  size={'16px'} /> }
-       
-        >
-          { "Profile" }
-        </MenuItem>: null}
+        {user.data ? (
+        <Link href={'/shop/profile'}> <MenuItem icon={<Profile size={"16px"} />}>{"Profile"}</MenuItem></Link> 
+        ) : null}
       </MenuList>
       <ModalContainer isOpen={isOpen} onClose={onClose} />
     </Menu>

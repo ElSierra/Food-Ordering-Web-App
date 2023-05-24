@@ -42,7 +42,8 @@ export const userSlice = createApi({
       }),
       invalidatesTags: ["User"],
     }),
+  
   }),
 });
-export const { useLoginUserMutation, useVerifyOTPMutation, useSignUPMutation } =
+export const { useLoginUserMutation, useVerifyOTPMutation, useSignUPMutation, } =
   userSlice;

@@ -65,13 +65,14 @@ export default function BottomBar() {
           />
         </Center>
       </Link>
+      <Link href={"/shop/profile"}>
       <Center>
         <IconButton
           bg="transparent"
           aria-label={"Profile"}
-          icon={<Profile />}
+          icon={<Profile  variant={pathname === "/shop/profile" ? "Bulk" : "Outline"} />}
         />
-      </Center>
+      </Center></Link>
     </Flex>
   );
 }

@@ -19,44 +19,23 @@ export default function ProfilePhotoModal({
   onClose,
   onCrop,
   onClosedCrop,
+  onUpload,
 }: {
   isOpen: boolean;
   onClose: any;
   onCrop: any;
   onClosedCrop: any;
+  onUpload: () => void;
 }) {
   const [file, setFile] = useState<any>();
-  const [isLoading, setIsLoading] = useState(Boolean)
+  const [isLoading, setIsLoading] = useState(Boolean);
   function onBeforeFileLoad(elem: any) {
     if (elem.target.files[0].size > 2000000) {
       alert("File is too big!");
       elem.target.value = "";
     }
-    console.log("elem", elem.target.files[0]);
-    setFile(elem.target.files[0]);
   }
 
-  const upload = () => {
-    if (file) {
-      const token = Cookies.get("qs_token");
-      const formData = new FormData();
-      formData.append("photo", file);
-
-      axios
-        .put(`${process.env.NEXT_PUBLIC_BASE_URL}/upload-avatar`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then(function (response) {
-          console.log(response.data);
-        })
-        .catch(function (error) {
-          console.log(error.response.data);
-        });
-    }
-  };
   const bg = useColorModeValue("#FFFFFF", "#000000");
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -82,7 +61,13 @@ export default function ProfilePhotoModal({
               onBeforeFileLoad={onBeforeFileLoad}
             />
           </Center>
-          <Button mt="20px" w="100%" onClick={upload}>
+          <Button
+            mt="20px"
+            w="100%"
+            onClick={(e) => {
+              onUpload()
+            }}
+          >
             Upload
           </Button>
         </ModalBody>

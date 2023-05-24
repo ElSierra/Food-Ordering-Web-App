@@ -27,6 +27,17 @@ export const userAuthApi = createApi({
       query: () => "/logout",
       providesTags: ["User"],
     }),
+    photoPost: builder.mutation({
+      query: (payload) => ({
+        url: `/upload-preview`,
+        method: "PUT",
+        body: payload,
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
-export const { useGetUserQuery , useLogOutQuery} = userAuthApi;
+export const { useGetUserQuery , useLogOutQuery, usePhotoPostMutation} = userAuthApi;
