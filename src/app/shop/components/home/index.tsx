@@ -81,7 +81,7 @@ export const HomeContainer = ({
       }
     }
   }
-  console.log("hh", restaurants.data);
+
   const getMoreRestaurants = () => {
     if (restaurants.data) {
       setRestaurantData((restShop) => [
