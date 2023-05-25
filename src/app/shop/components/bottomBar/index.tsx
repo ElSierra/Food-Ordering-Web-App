@@ -45,7 +45,7 @@ export default function BottomBar() {
       </Link>
       <Link href={"/shop/cart"}>
         <Center>
-          {/* <Text position={"absolute"}>{cart.data?.length}</Text> */}
+          <Text position={"absolute"}>{cart.data?.length}</Text>
           <IconButton
             bg="transparent"
             aria-label={"Cart"}
