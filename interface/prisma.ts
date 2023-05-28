@@ -1,4 +1,4 @@
-import { Menu, Orders, Restaurant } from "@prisma/client";
+import { LoginInfo, Menu, Orders, Restaurant } from "@prisma/client";
 
 export type UserResponse = {
   id: string;
@@ -9,8 +9,8 @@ export type UserResponse = {
   like: { restaurantId: string }[];
   location: any;
   dislike: { restaurantId: string }[];
-  orders: [];
-  loginInfo: [];
+  orders: Orders[];
+  loginInfo: LoginInfo[];
   verified: boolean;
   OTP: number;
   password: string;
