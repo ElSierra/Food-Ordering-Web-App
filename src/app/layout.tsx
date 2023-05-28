@@ -2,7 +2,7 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { Providers } from "./chakra/provider";
 import { Providers as ReduxProvider } from "@/redux/provider";
 import "./index.css";
-
+import 'animate.css';
 const plusJakaraSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 export const metadata = {

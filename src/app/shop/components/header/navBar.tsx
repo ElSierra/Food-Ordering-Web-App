@@ -139,13 +139,14 @@ export default function NavBar() {
               >
                 <HStack>
                   <Receipt21 variant="Bulk" size={"20px"} />{" "}
-                  <Text>
-                    {user.data?.user?.orders?.length}{" "}
-                    {user.data?.user?.orders[0]?.status === "PAID"
-                      ? "KKK"
-                      : "JJJ"}
-                  </Text>
-                  <ArrowDown2 size="15px" style={{ marginLeft: "2px" }} />
+                  <Text>{user.data?.user?.orders?.length} </Text>
+                  <Box
+                    className="animate__animated animate__infinite animate__jello "
+                    height={"20px"}
+                    width="20px"
+                    borderRadius={'full'}
+                    bgColor={"green"}
+                  ></Box>
                 </HStack>
               </Button>
             </Center>

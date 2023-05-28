@@ -3,41 +3,42 @@ import { RestaurantResponse } from "../../../../../interface/prisma";
 import { prisma } from "../../../../../lib/prisma";
 import Home from "../home";
 
-
-//TODO: Create Order Page with UI, I downloaded
-//TODO: Verify Email Socket
-//TODO: Cart/Ordering on Phone
-
-export default async function Restaurant({params}: {params:{id: string}}) {
-
+export default async function Restaurant({
+  params,
+}: {
+  params: { id: string };
+}) {
   const fetchRestaurants = async () => {
     try {
       const restaurant = await prisma.restaurant.findUnique({
         where: {
-          id : params.id
+          id: params.id,
         },
         include: {
-          menu: true
-        }
-      })
+          menu: true,
+        },
+      });
       return restaurant;
     } catch (e) {
       console.log(e);
-      notFound()
-      
+      notFound();
     }
   };
 
   const restaurant: any = await fetchRestaurants();
 
-  return  <main
-  style={{
-    display: "flex",
-    minHeight: "100vh",
-    flexDirection: "column",
-    paddingLeft: "5%",
-    paddingRight: "5%",
-  }}>
-    <Home restaurant = {restaurant} params={params}/>
-  </main>
+  return (
+    <main
+      className="animate__animated animate__flash"
+      style={{
+        display: "flex",
+        minHeight: "100vh",
+        flexDirection: "column",
+        paddingLeft: "5%",
+        paddingRight: "5%",
+      }}
+    >
+      <Home restaurant={restaurant} params={params} />
+    </main>
+  );
 }

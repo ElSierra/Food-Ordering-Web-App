@@ -63,6 +63,7 @@ export default async function Restaurant({
 
   return (
     <main
+    className="animate__animated animate__flash"
       style={{
         display: "flex",
         minHeight: "100vh",

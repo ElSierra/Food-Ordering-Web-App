@@ -23,6 +23,7 @@ export default async function Home() {
 
   return (
     <main
+      className="animate__animated animate__flash"
       style={{
         display: "flex",
         minHeight: "100vh",
@@ -31,7 +32,11 @@ export default async function Home() {
         paddingRight: "5%",
       }}
     >
-      <HomeContainer restaurant={restaurants} isLoadingPage={false} userId={userId?.value || ''} />
+      <HomeContainer
+        restaurant={restaurants}
+        isLoadingPage={false}
+        userId={userId?.value || ""}
+      />
     </main>
   );
 }

@@ -19,7 +19,7 @@ export default function ExploreBox({
 }: props) {
   return (
     <Flex
-      className="animate__animated animate__fadeInDown"
+     
       minW="130px"
       minH="130px"
       onClick={onClick}
