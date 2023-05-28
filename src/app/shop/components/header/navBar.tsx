@@ -24,7 +24,7 @@ import Image from "next/image";
 import { SearchBar } from "./searchBar";
 import { AuthMenu } from "../auth/authMenu";
 import { useUserState } from "@/app/hooks/setGetUser";
-import { ArrowDown2, BagHappy, WalletMoney } from "iconsax-react";
+import { ArrowDown2, BagHappy, Receipt21, WalletMoney } from "iconsax-react";
 import { MobileSearchBar } from "./mobileSearchBar";
 import SearchModal from "../search";
 import Link from "next/link";
@@ -49,14 +49,13 @@ export default function NavBar() {
     (state: { cartDataReducer: CartState }) => state.cartDataReducer
   );
 
-  
-
   const borderBottom = useColorModeValue("#F7F6F6", "#303030");
   const bg = useColorModeValue("#FFFFFF", "#000000");
   const { getUserData } = useUserState();
 
   const pathname = usePathname();
   const user = getUserData();
+  console.log("user data", user.data?.user.orders);
   console.log("header", pathname.split("/").length);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -126,7 +125,26 @@ export default function NavBar() {
                 onClick={onOpenDrawer}
               >
                 <HStack>
-                  <BagHappy variant="Bulk" size={"20px"} /> <Text>{cart.data?.length}</Text>
+                  <BagHappy variant="Bulk" size={"20px"} />{" "}
+                  <Text>{cart.data?.length}</Text>
+                  <ArrowDown2 size="15px" style={{ marginLeft: "2px" }} />
+                </HStack>
+              </Button>
+              <Button
+                ml="20px"
+                ref={btnRef}
+                display={{ base: "none", lg: "inline-block" }}
+                colorScheme="teal"
+                onClick={onOpenDrawer}
+              >
+                <HStack>
+                  <Receipt21 variant="Bulk" size={"20px"} />{" "}
+                  <Text>
+                    {user.data?.user?.orders?.length}{" "}
+                    {user.data?.user?.orders[0]?.status === "PAID"
+                      ? "KKK"
+                      : "JJJ"}
+                  </Text>
                   <ArrowDown2 size="15px" style={{ marginLeft: "2px" }} />
                 </HStack>
               </Button>
