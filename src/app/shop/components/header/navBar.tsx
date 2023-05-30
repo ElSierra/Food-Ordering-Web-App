@@ -24,7 +24,16 @@ import Image from "next/image";
 import { SearchBar } from "./searchBar";
 import { AuthMenu } from "../auth/authMenu";
 import { useUserState } from "@/app/hooks/setGetUser";
-import { ArrowDown2, BagHappy, Receipt21, WalletMoney } from "iconsax-react";
+import {
+  Alarm,
+  ArrowDown2,
+  BagHappy,
+  Money2,
+  MoneyChange,
+  Receipt21,
+  Timer,
+  WalletMoney,
+} from "iconsax-react";
 import { MobileSearchBar } from "./mobileSearchBar";
 import SearchModal from "../search";
 import Link from "next/link";
@@ -130,25 +139,50 @@ export default function NavBar() {
                   <ArrowDown2 size="15px" style={{ marginLeft: "2px" }} />
                 </HStack>
               </Button>
-              <Button
-                ml="20px"
-                ref={btnRef}
-                display={{ base: "none", lg: "inline-block" }}
-                colorScheme="teal"
-                onClick={onOpenDrawer}
-              >
-                <HStack>
-                  <Receipt21 variant="Bulk" size={"20px"} />{" "}
-                  <Text>{user.data?.user?.orders?.length} </Text>
-                  <Box
-                    className="animate__animated animate__infinite animate__jello "
-                    height={"20px"}
-                    width="20px"
-                    borderRadius={'full'}
-                    bgColor={"green"}
-                  ></Box>
-                </HStack>
-              </Button>
+              <Link href={"/shop/orders"}>
+                {" "}
+                <Button
+                  ml="20px"
+                  display={{ base: "none", lg: "inline-block" }}
+                  colorScheme="teal"
+                >
+                  <HStack>
+                    <Receipt21 variant="Bulk" size={"20px"} />{" "}
+                    <Text>{user.data?.user?.orders?.length} </Text>
+                    <Center
+                      className="animate__animated animate__infinite animate__jello "
+                      height={"20px"}
+                      width="20px"
+                      borderRadius={"full"}
+                    >
+                      {user.data?.user?.orders[0]?.status === "PENDING" ? (
+                        <Box
+                          width={"fit-content"}
+                          padding={"2px"}
+                          borderRadius={"sm"}
+                          bgColor={"green"}
+                        >
+                          <Text color={"white"} fontWeight={"extrabold"} textColor={''} fontSize={'20px'}>
+                            ₦
+                          </Text>
+                          <Text
+                            position={"absolute"}
+                            zIndex={9}
+                            top={0}
+                            left={1}
+                            color={"white"}
+                            fontWeight={"extrabold"}
+                          >
+                            ₦
+                          </Text>
+                        </Box>
+                      ) : (
+                        <Alarm variant="Bulk" size={"20px"} />
+                      )}
+                    </Center>
+                  </HStack>
+                </Button>
+              </Link>
             </Center>
           )}
           <Center
