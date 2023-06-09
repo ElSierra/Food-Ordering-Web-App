@@ -15,7 +15,7 @@ import ExploreBox from "../explore";
 import { exploreData } from "../data";
 import { Banner } from "../banner";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { UserState } from "@/redux/features/authSlice";
 
 import UnVerifiedModalContainer from "../auth/verifyEmailModal";
@@ -93,13 +93,14 @@ export const HomeContainer = ({
 
   const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (verify) {
       onClose();
       if (typeof window !== "undefined") {
         localStorage.removeItem("quickChopVerified");
       }
     }
+
     if (typeof window !== "undefined") {
       if (Cookies.get("qs_token")) {
         console.log(Cookies.get("qs_token"));
@@ -112,6 +113,27 @@ export const HomeContainer = ({
         setSkip(true);
       }
     }
+  }, [onClose, onOpen, verify, setSkip]);
+
+  useEffect(() => {
+    // if (verify) {
+    //   onClose();
+    //   if (typeof window !== "undefined") {
+    //     localStorage.removeItem("quickChopVerified");
+    //   }
+    // }
+    // if (typeof window !== "undefined") {
+    //   if (Cookies.get("qs_token")) {
+    //     console.log(Cookies.get("qs_token"));
+    //     setSkip(false);
+    //     if (localStorage.getItem("quickChopVerified") === "a1fh") {
+    //       onOpen();
+    //     } else {
+    //     }
+    //   } else {
+    //     setSkip(true);
+    //   }
+    // }
 
     const url = pathname;
     console.log("🌍", url);
@@ -185,7 +207,6 @@ export const HomeContainer = ({
             justify={"space-between"}
             overflowX="scroll"
             w="100%"
-           
             overflowY={"hidden"}
             scrollSnapType={"x mandatory"}
             style={{ scrollbarWidth: "none" }}

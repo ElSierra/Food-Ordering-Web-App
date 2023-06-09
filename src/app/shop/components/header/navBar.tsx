@@ -155,7 +155,7 @@ export default function NavBar() {
                       width="20px"
                       borderRadius={"full"}
                     >
-                      {user.data?.user?.orders[0]?.status === "PENDING" ? (
+                      {user.data?.user?.orders[0] ? user.data?.user?.orders[0]?.status === "PENDING" ? (
                         <Box
                           width={"fit-content"}
                           padding={"2px"}
@@ -178,7 +178,7 @@ export default function NavBar() {
                         </Box>
                       ) : (
                         <Alarm variant="Bulk" size={"20px"} />
-                      )}
+                      ): null}
                     </Center>
                   </HStack>
                 </Button>
