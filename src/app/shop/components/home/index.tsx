@@ -54,7 +54,9 @@ export const HomeContainer = ({
   const [verify, setVerify] = useState(false);
   const searchParams = useSearchParams();
 
-  const [restaurantData, setRestaurantData] = useState(()=>restaurantFromServer);
+  const [restaurantData, setRestaurantData] = useState(
+    () => restaurantFromServer
+  );
   const { getUserData, setUserDataQuery } = useUserState(skip);
   const user: UserState = getUserData();
   const data = setUserDataQuery();
@@ -266,45 +268,56 @@ export const HomeContainer = ({
               })
             : null}
         </div>
-
-        {restaurantData && restaurantData.length > 0 ? (
-          <InfiniteScroll
-            className="grid"
-            style={{ marginTop: "60px" }}
-            dataLength={restaurantData?.length}
-            next={getMoreRestaurants}
-            hasMore={hasMore}
-            loader={
-              <Box position={"absolute"} left={"50%"} right={"50%"} bottom={20}>
-                {" "}
-                <Spinner thickness="4px" size={{ base: "sm", md: "md" }} />
-              </Box>
-            }
-            endMessage={
-              <Box position={"absolute"} left={"50%"} right={"50%"} bottom={10}>
-                {" "}
-                <Link href={"shop/#top"} style={{ marginTop: "30px" }}>
-                  <IconButton
-                    aria-label="up"
-                    icon={<ArrowSquareUp size="32" />}
-                  />
-                </Link>
-              </Box>
-            }
-          >
-            {restaurantData
-              ? restaurantData.map((restaurant) => {
-                  return (
-                    <RestaurantCard
-                      user={user}
-                      restaurant={restaurant}
-                      key={restaurant.id}
+        <div  style={{ height: "", overflow: "auto"}}>
+          {restaurantData && restaurantData.length > 0 ? (
+            <InfiniteScroll
+              className="grid"
+              style={{ marginTop: "60px" ,  scrollbarWidth: "none"}}
+              dataLength={restaurantData?.length}
+              next={getMoreRestaurants}
+              hasMore={hasMore}
+              loader={
+                <Box
+                  position={"absolute"}
+                  left={"50%"}
+                  right={"50%"}
+                  bottom={20}
+                >
+                  {" "}
+                  <Spinner thickness="4px" size={{ base: "sm", md: "md" }} />
+                </Box>
+              }
+              endMessage={
+                <Box
+                  position={"absolute"}
+                  left={"50%"}
+                  right={"50%"}
+                  bottom={10}
+                >
+                  {" "}
+                  <Link href={"shop/#top"} style={{ marginTop: "30px" }}>
+                    <IconButton
+                      aria-label="up"
+                      icon={<ArrowSquareUp size="32" />}
                     />
-                  );
-                })
-              : null}
-          </InfiniteScroll>
-        ) : null}
+                  </Link>
+                </Box>
+              }
+            >
+              {restaurantData
+                ? restaurantData.map((restaurant) => {
+                    return (
+                      <RestaurantCard
+                        user={user}
+                        restaurant={restaurant}
+                        key={restaurant.id}
+                      />
+                    );
+                  })
+                : null}
+            </InfiniteScroll>
+          ) : null}
+        </div>
       </Flex>
     </>
   );

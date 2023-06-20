@@ -59,7 +59,7 @@ const disableButton =  user.data?.user?.like?.some(obj=> obj.restaurantId === re
   };
   return (
     <Box
-      h={"330px"}
+      h={"350px"}
       w="100%"
       borderRadius={"20px"}
       _hover={{
