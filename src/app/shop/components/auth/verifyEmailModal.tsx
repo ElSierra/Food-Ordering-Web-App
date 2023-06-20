@@ -43,7 +43,7 @@ export default function UnVerifiedModalContainer({
         maxW={{ base: "90%", xl: "40%" }}
       >
         <ModalBody>
-          <Text>verify={verify?'true': "false"}</Text>
+         
           <UnVerifiedUserPage onClose={onClose} />
         </ModalBody>
       </ModalContent>

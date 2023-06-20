@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -30,6 +30,7 @@
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.0",
     "lottie-react": "^2.4.0",
+    "million": "^2.4.4",
     "next": "13.4.1",
     "next-redux-wrapper": "^8.1.0",
     "nprogress": "^0.2.0",

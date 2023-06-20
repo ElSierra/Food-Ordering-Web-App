@@ -1,14 +1,15 @@
 import { Box, Button, Center, Text } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { reset } from "@/redux/features/authSlice";
+import Cookies from "js-cookie";
 
-export const UnVerifiedUserPage = ({onClose}: {onClose : ()=> void}) => {
+export const UnVerifiedUserPage = ({ onClose }: { onClose: () => void }) => {
   const dispatch = useAppDispatch();
   const logOut = () => {
-    localStorage.removeItem("quickShopToken");
+    Cookies.remove("qs_token");
     localStorage.removeItem("quickChopUserEmail");
     dispatch(reset());
-    onClose()
+    onClose();
   };
   return (
     <Box>

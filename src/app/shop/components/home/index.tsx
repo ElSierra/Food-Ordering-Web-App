@@ -54,7 +54,7 @@ export const HomeContainer = ({
   const [verify, setVerify] = useState(false);
   const searchParams = useSearchParams();
 
-  const [restaurantData, setRestaurantData] = useState(restaurantFromServer);
+  const [restaurantData, setRestaurantData] = useState(()=>restaurantFromServer);
   const { getUserData, setUserDataQuery } = useUserState(skip);
   const user: UserState = getUserData();
   const data = setUserDataQuery();
