@@ -11,7 +11,14 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Restaurant } from "@prisma/client";
-import { ArrowSquareRight, Clock, Dislike, Like, Like1, Star } from "iconsax-react";
+import {
+  ArrowSquareRight,
+  Clock,
+  Dislike,
+  Like,
+  Like1,
+  Star,
+} from "iconsax-react";
 import Image from "next/image";
 
 import "./loadImage.css";
@@ -44,18 +51,16 @@ export default function RestaurantCard({
     { skip: skip }
   );
 
-
-
-const disableButton =  user.data?.user?.like?.some(obj=> obj.restaurantId === restaurant.id) || user.data?.user?.dislike?.some(obj=> obj.restaurantId === restaurant.id)
+  const disableButton =
+    user.data?.user?.like?.some((obj) => obj.restaurantId === restaurant.id) ||
+    user.data?.user?.dislike?.some((obj) => obj.restaurantId === restaurant.id);
   const handleLike = () => {
     setLike(true);
     setSkip(false);
-    
   };
   const handleDisLike = () => {
     setSkip(false);
     setLike(false);
-
   };
   return (
     <Box
@@ -91,57 +96,65 @@ const disableButton =  user.data?.user?.like?.some(obj=> obj.restaurantId === re
           </Box>
         </Link>
       </Box>
-      <Flex mt="15px" flexDirection={"column"} gap={1}>
-        <HStack>
-          <Text fontWeight={"bolder"} fontSize={"md"}>
-            {restaurant.name}
-          </Text>
-          <Spacer />
+      <Flex mt="15px" flexDirection={"column"} justifyContent={'space-evenly'}>
+        <Flex flexDirection={"column"} gap={1}>
           <HStack>
-            <Star
-              variant={"Bulk"}
-              size={"20px"}
-              cursor="pointer"
-              onClick={() => {}}
-            />
-            <Text fontSize={"12px"}>
-              {rateRestaurant.data?.msg?.toString() || restaurant.rating} ({restaurant.ratingAmount})%
+            <Text fontWeight={"bolder"} fontSize={"md"}>
+              {restaurant.name}
             </Text>
+            <Spacer />
+            <HStack width={'80px'}>
+              <Star
+                variant={"Bulk"}
+                size={"20px"}
+                cursor="pointer"
+                onClick={() => {}}
+              />
+              <Text fontSize={"12px"}>
+                {rateRestaurant.data?.msg?.toString() || restaurant.rating} (
+                {restaurant.ratingAmount})%
+              </Text>
+            </HStack>
           </HStack>
-        </HStack>
-        <HStack>
-          <Clock variant="Bulk" size={"20px"} />
-          <Text fontSize={"12px"}>54-64 mins</Text>
-        </HStack>
+          <HStack>
+            <Clock variant="Bulk" size={"20px"} />
+            <Text fontSize={"12px"}>54-64 mins</Text>
+          </HStack>
 
-        <Flex>
-        {user.data?.user && <HStack>
-          <IconButton
-            bg={"#12B76A"}
-            size={"xs"}
-            isDisabled = {disableButton}
-            aria-label="like"
-            _hover={{ bg: "#0B7946" }}
-            onClick={handleLike}
-            icon={<Like1 size={"16px"} color="white" />}
-          />
-          <IconButton
-            bg={"#F04438"}
-            isDisabled  = {disableButton}
-            size={"xs"}
-            onClick={handleDisLike}
-            _hover={{ bg: "#82251E" }}
-            aria-label="dislike"
-            icon={<Dislike size={"16px"} color="white" />}
-          />
-        </HStack>}
-        <Spacer/>
-      <Link  href={`shop/restaurant/${restaurant.id}`}><ArrowSquareRight color={"#004C29"} size={'30px'} variant="Bulk"/></Link>
-        
+          <Flex>
+            {user.data?.user && (
+              <HStack>
+                <IconButton
+                  bg={"#12B76A"}
+                  size={"xs"}
+                  isDisabled={disableButton}
+                  aria-label="like"
+                  _hover={{ bg: "#0B7946" }}
+                  onClick={handleLike}
+                  icon={<Like1 size={"16px"} color="white" />}
+                />
+                <IconButton
+                  bg={"#F04438"}
+                  isDisabled={disableButton}
+                  size={"xs"}
+                  onClick={handleDisLike}
+                  _hover={{ bg: "#82251E" }}
+                  aria-label="dislike"
+                  icon={<Dislike size={"16px"} color="white" />}
+                />
+              </HStack>
+            )}
+            <Spacer />
+          </Flex>
         </Flex>
-
+        <Spacer />
+        <Flex position={'absolute'} bottom={0} right={0} padding={'20px'} zIndex={9}>
+          <Spacer />
+          <Link href={`shop/restaurant/${restaurant.id}`}>
+            <ArrowSquareRight color={"#09B766"} size={"30px"} variant="Bulk" />
+          </Link>
+        </Flex>
       </Flex>
     </Box>
   );
 }
-
