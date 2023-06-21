@@ -6,7 +6,7 @@
   margin-bottom: 30px;
   margin-top: 60px;
   width: 100%;
-  -ms-overflow-style: none; /* IE and Edge */
+  -ms-overflow-style: none;
   scrollbar-width: none;
 }
 

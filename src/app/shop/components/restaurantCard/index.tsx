@@ -96,14 +96,14 @@ export default function RestaurantCard({
           </Box>
         </Link>
       </Box>
-      <Flex mt="15px" flexDirection={"column"} justifyContent={'space-evenly'}>
+      <Flex mt="15px" flexDirection={"column"}>
         <Flex flexDirection={"column"} gap={1}>
           <HStack>
             <Text fontWeight={"bolder"} fontSize={"md"}>
               {restaurant.name}
             </Text>
             <Spacer />
-            <HStack width={'80px'}>
+            <HStack>
               <Star
                 variant={"Bulk"}
                 size={"20px"}
@@ -111,7 +111,7 @@ export default function RestaurantCard({
                 onClick={() => {}}
               />
               <Text fontSize={"12px"}>
-                {rateRestaurant.data?.msg?.toString() || restaurant.rating} (
+                {rateRestaurant.data?.msg?.toString() || Number(restaurant.rating).toFixed()} (
                 {restaurant.ratingAmount})%
               </Text>
             </HStack>
@@ -120,35 +120,46 @@ export default function RestaurantCard({
             <Clock variant="Bulk" size={"20px"} />
             <Text fontSize={"12px"}>54-64 mins</Text>
           </HStack>
-
-          <Flex>
-            {user.data?.user && (
-              <HStack>
-                <IconButton
-                  bg={"#12B76A"}
-                  size={"xs"}
-                  isDisabled={disableButton}
-                  aria-label="like"
-                  _hover={{ bg: "#0B7946" }}
-                  onClick={handleLike}
-                  icon={<Like1 size={"16px"} color="white" />}
-                />
-                <IconButton
-                  bg={"#F04438"}
-                  isDisabled={disableButton}
-                  size={"xs"}
-                  onClick={handleDisLike}
-                  _hover={{ bg: "#82251E" }}
-                  aria-label="dislike"
-                  icon={<Dislike size={"16px"} color="white" />}
-                />
-              </HStack>
-            )}
-            <Spacer />
-          </Flex>
+        </Flex>
+        <Flex
+          position={"absolute"}
+          bottom={0}
+          left={0}
+          padding={"20px"}
+          zIndex={9}
+        >
+          {user.data?.user && (
+            <HStack>
+              <IconButton
+                bg={"#12B76A"}
+                size={"xs"}
+                isDisabled={disableButton}
+                aria-label="like"
+                _hover={{ bg: "#0B7946" }}
+                onClick={handleLike}
+                icon={<Like1 size={"16px"} color="white" />}
+              />
+              <IconButton
+                bg={"#F04438"}
+                isDisabled={disableButton}
+                size={"xs"}
+                onClick={handleDisLike}
+                _hover={{ bg: "#82251E" }}
+                aria-label="dislike"
+                icon={<Dislike size={"16px"} color="white" />}
+              />
+            </HStack>
+          )}
+          <Spacer />
         </Flex>
         <Spacer />
-        <Flex position={'absolute'} bottom={0} right={0} padding={'20px'} zIndex={9}>
+        <Flex
+          position={"absolute"}
+          bottom={0}
+          right={0}
+          padding={"20px"}
+          zIndex={9}
+        >
           <Spacer />
           <Link href={`shop/restaurant/${restaurant.id}`}>
             <ArrowSquareRight color={"#09B766"} size={"30px"} variant="Bulk" />
